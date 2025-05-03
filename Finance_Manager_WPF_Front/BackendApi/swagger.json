@@ -11,6 +11,7 @@
           "Administrator"
         ],
         "summary": "Get category by id.",
+        "operationId": "GetCategory",
         "parameters": [
           {
             "name": "id",
@@ -74,6 +75,7 @@
           "Administrator"
         ],
         "summary": "Delete category by id.",
+        "operationId": "DeleteCategory",
         "parameters": [
           {
             "name": "id",
@@ -162,6 +164,7 @@
           "Administrator"
         ],
         "summary": "Create all categories and seed them in data base.",
+        "operationId": "CreateAllCategories",
         "responses": {
           "204": {
             "description": "Success."
@@ -198,6 +201,7 @@
           "Administrator"
         ],
         "summary": "Create category.",
+        "operationId": "CreateCategory",
         "requestBody": {
           "description": "CategoryDTO to create.",
           "content": {
@@ -314,6 +318,7 @@
           "Administrator"
         ],
         "summary": "Update category.",
+        "operationId": "UpdateCategory",
         "requestBody": {
           "description": "New categoryDTO object.",
           "content": {
@@ -430,6 +435,7 @@
           "Analytics"
         ],
         "summary": "Get spending analytics in date range.",
+        "operationId": "GetAnalytics",
         "parameters": [
           {
             "name": "userId",
@@ -538,6 +544,7 @@
           "Analytics"
         ],
         "summary": "Get spending analytics from general category in date range.",
+        "operationId": "GetInnerAnalytics",
         "parameters": [
           {
             "name": "parentCategoryId",
@@ -654,6 +661,7 @@
           "Auth"
         ],
         "summary": "Register new user.",
+        "operationId": "Register",
         "requestBody": {
           "description": "AuthDataDTO with email and password",
           "content": {
@@ -727,6 +735,7 @@
           "Auth"
         ],
         "summary": "Authenticate user.",
+        "operationId": "Authenticate",
         "requestBody": {
           "description": "AuthDataDTO with email and password",
           "content": {
@@ -800,6 +809,7 @@
           "Auth"
         ],
         "summary": "Authenticate user with refresh token.",
+        "operationId": "RefreshToken",
         "requestBody": {
           "description": "Refresh token.",
           "content": {
@@ -893,6 +903,7 @@
           "Categories"
         ],
         "summary": "Get category by id.",
+        "operationId": "GetCategory",
         "parameters": [
           {
             "name": "id",
@@ -958,6 +969,7 @@
           "Categories"
         ],
         "summary": "Get list of all categories.",
+        "operationId": "GetAllCategories",
         "responses": {
           "200": {
             "description": "Success.",
@@ -1000,6 +1012,7 @@
           "Savings"
         ],
         "summary": "Create saving.",
+        "operationId": "CreateSaving",
         "requestBody": {
           "description": "The savingDTO to create.",
           "content": {
@@ -1114,6 +1127,7 @@
           "Savings"
         ],
         "summary": "Get list of savings.",
+        "operationId": "GetSavings",
         "parameters": [
           {
             "name": "userId",
@@ -1220,6 +1234,7 @@
           "Savings"
         ],
         "summary": "Update saving with new top up.",
+        "operationId": "UpdateSaving",
         "requestBody": {
           "description": "TopUpDTO with parameters:\r\n            savingId - Saving id;\r\n            topUpAmount - Amount of top up.",
           "content": {
@@ -1316,6 +1331,7 @@
           "Savings"
         ],
         "summary": "Get saving by id.",
+        "operationId": "GetSaving",
         "parameters": [
           {
             "name": "id",
@@ -1379,6 +1395,7 @@
           "Savings"
         ],
         "summary": "Delete saving by id.",
+        "operationId": "DeleteSaving",
         "parameters": [
           {
             "name": "id",
@@ -1447,6 +1464,7 @@
           "Transactions"
         ],
         "summary": "Create transaction.",
+        "operationId": "CreateTransaction",
         "requestBody": {
           "description": "The transactionDTO to create.",
           "content": {
@@ -1561,6 +1579,7 @@
           "Transactions"
         ],
         "summary": "Get list of transactions.",
+        "operationId": "GetTransactions",
         "parameters": [
           {
             "name": "userId",
@@ -1667,6 +1686,7 @@
           "Transactions"
         ],
         "summary": "Update transaction with new data.",
+        "operationId": "UpdateTransaction",
         "requestBody": {
           "description": "New transactionDTO object.",
           "content": {
@@ -1763,6 +1783,7 @@
           "Transactions"
         ],
         "summary": "Get transaction by id.",
+        "operationId": "GetTransaction",
         "parameters": [
           {
             "name": "id",
@@ -1826,6 +1847,7 @@
           "Transactions"
         ],
         "summary": "Delete transaction by id.",
+        "operationId": "DeleteTransaction",
         "parameters": [
           {
             "name": "id",
@@ -1894,6 +1916,7 @@
           "User"
         ],
         "summary": "Get user balance by id.",
+        "operationId": "GetBalance",
         "parameters": [
           {
             "name": "id",
@@ -1959,6 +1982,7 @@
           "User"
         ],
         "summary": "Update user currency.",
+        "operationId": "UpdateCurrency",
         "requestBody": {
           "description": "currencyQueryDTO with parameters:\r\n            UserId - user id;\r\n            CurrencyRang - rang of currency that will be update, can be \"Primary\", \"Secondary1\" or \"Secondary2\".\r\n            CurrencyCode - code for this currency.",
           "content": {
@@ -2182,7 +2206,7 @@
           },
           "balance": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           }
         },
         "additionalProperties": false
@@ -2212,7 +2236,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "Saving": {
         "type": "object",
@@ -2409,7 +2433,7 @@
           },
           "balance": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           },
           "primaryCurrency": {
             "type": "string",
@@ -2468,7 +2492,7 @@
           },
           "balance": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           }
         },
         "additionalProperties": false
@@ -2485,7 +2509,7 @@
   },
   "security": [
     {
-      "Bearer": [ ]
+      "Bearer": []
     }
   ]
 }

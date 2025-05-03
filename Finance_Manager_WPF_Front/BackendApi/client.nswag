@@ -46,6 +46,7 @@
       "queryNullValue": "",
       "className": "FinanceApiClient",
       "operationGenerationMode": "SingleClientFromOperationId",
+      "generateOperationNameAlways": true,
       "additionalNamespaceUsages": [],
       "additionalContractNamespaceUsages": [],
       "generateOptionalParameters": true,
@@ -94,8 +95,8 @@
       "templateDirectory": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "BackendApi/ApiClient.cs",
-      "newLineBehavior": "Auto"
+      "output": "ApiClient.cs",
+      "newLineBehavior": "Auto"      
     }
   }
 }
