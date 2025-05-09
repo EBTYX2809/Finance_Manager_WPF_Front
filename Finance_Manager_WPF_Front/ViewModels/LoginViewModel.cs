@@ -1,6 +1,9 @@
-﻿using Finance_Manager_WPF_Front.Views;
+﻿using Finance_Manager_WPF_Front.Services.AuthServices;
+using Finance_Manager_WPF_Front.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,9 +11,9 @@ namespace Finance_Manager_WPF_Front.ViewModels;
 
 public class LoginViewModel : INotifyPropertyChanged
 {
-    //private readonly UserSession _userSession;
-    //private readonly AuthService _authService;
-    //private readonly GoogleAuthServise _googleAuthServise;
+    private readonly AuthService _authService;
+    private readonly TokensManager _tokensManager;
+    private readonly WindowChanger _windowChanger;
 
     private string _email;
     public string Email
@@ -21,84 +24,102 @@ public class LoginViewModel : INotifyPropertyChanged
             if (value != _email)
             {
                 _email = value;
-                OnPropertyChanged(nameof(Email));
+                OnPropertyChanged();
+                if (_email.Length > 0) IsEmailPlaceholderVisible = false;
+                else IsEmailPlaceholderVisible = true;
             }
         }
     }
 
-    private string _password;
-    public string Password
+    private bool _isEmailPlaceholderVisible;
+    public bool IsEmailPlaceholderVisible
     {
-        get => _password;
+        get => _isEmailPlaceholderVisible;
         set
         {
-            if (value != _password)
+            if (value != _isEmailPlaceholderVisible)
             {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
+                _isEmailPlaceholderVisible = value;
+                OnPropertyChanged();
             }
         }
     }
 
-    private bool _saveCredentials;
-    public bool SaveCredentials
+    private bool _isPasswordPlaceholderVisible;
+    public bool IsPasswordPlaceholderVisible
     {
-        get => _saveCredentials;
+        get => _isPasswordPlaceholderVisible;
         set
         {
-            if (value != _saveCredentials)
+            if (value != _isPasswordPlaceholderVisible) 
             {
-                _saveCredentials = value;
+                _isPasswordPlaceholderVisible = value;
+                OnPropertyChanged();
             }
         }
     }
 
-    public ICommand LoginCommand { get; set; }
+    public SecureString SecurePassword { get; set; }
 
-    /*public LoginViewModel(UserSession userSession, AuthService authService, GoogleAuthServise googleAuthServise)
+    public ICommand RegisterCommand { get; set; }
+    public ICommand AuthCommand { get; set; }
+    public ICommand AutoLoginCommand { get; set; }
+
+    public LoginViewModel(AuthService authService, TokensManager tokensManager, WindowChanger windowChanger)
     {
-        _userSession = userSession;
         _authService = authService;
-        _googleAuthServise = googleAuthServise;
+        _tokensManager = tokensManager;
+        _windowChanger = windowChanger;
 
-        LoginCommand = new RelayCommand(LoginAsync);
+        RegisterCommand = new AsyncRelayCommand(RegisterAsync);
+        AuthCommand = new AsyncRelayCommand(AuthAsync);
+        AutoLoginCommand = new AsyncRelayCommand(AutoLoginAsync);
 
-        LoginCheck();
+        IsEmailPlaceholderVisible = true;
+        IsPasswordPlaceholderVisible = true;
+        AutoLoginCommand.Execute(null);        
     }
 
-    private void LoginCheck()
+    private async Task AutoLoginAsync(object parameter)
     {
-        var (email, password) = _authService.LoadCredentials();
-        Email = email;
-        Password = password;
+        var existToken = _tokensManager.LoadRefreshToken();
+
+        if (existToken == null) return;        
+        
+        await _authService.LoginUserWithRefreshToken(existToken);
+        _windowChanger.GoToMainWindow();        
     }
 
-    private async void LoginAsync(object parameter)
+    private async Task AuthAsync(object parameter)
     {
-        if (parameter is string type) // Передать в параметрах команды
+        if (!ValidateCredentials()) return;
+        await _authService.AuthUser(Email, SecurePassword);
+        _windowChanger.GoToMainWindow();
+    }
+
+    private async Task RegisterAsync(object parameter)
+    {
+        if(!ValidateCredentials()) return;
+        await _authService.RegisterUser(Email, SecurePassword);
+        _windowChanger.GoToMainWindow();
+    }
+
+    private bool ValidateCredentials()
+    {
+        if (string.IsNullOrWhiteSpace(Email) || !Email.Contains('@') || !Email.Contains('.'))
         {
-            if (type == "auth")
-            {
-                _userSession.CurrentUser = await _authService.AuthenticateUserAsync(Email, Password);
-            }
-            else if (type == "reg")
-            {
-                _userSession.CurrentUser = await _authService.RegisterUserAsync(Email, Password);
-                if(SaveCredentials) await _authService.SaveCredentials(Email, Password);
-            }
+            MessageBox.Show("Invalid email.");
+            return false;
         }
 
-        if (_userSession.IsAuthenticated)
+        if (SecurePassword.Length < 6)
         {
-            Window currentWindow = Application.Current.MainWindow;
-
-            var mainWindow = new MainWindow();
-            Application.Current.MainWindow = mainWindow;
-            mainWindow.Show();
-
-            currentWindow?.Close();
+            MessageBox.Show("Password must be at least 6 characters.");
+            return false;
         }
-    }*/
+
+        return true;
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
