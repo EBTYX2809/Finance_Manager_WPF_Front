@@ -5,8 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow"
+        Height="450" Width="600"
+        Background="#2e2e2e"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid Margin="60">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Email TextBox -->
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" Height="70" Margin="0,0,0,20">
+                <TextBox Grid.Row="0" Grid.ColumnSpan="2" Height="70"
+                         Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Background="#3e3e3e" Foreground="White" 
+                         FontSize="28" Padding="16"
+                         VerticalContentAlignment="Center"/>
+                <TextBlock Text="Email"
+                           Margin="20,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           Foreground="#777"
+                           IsHitTestVisible="False"
+                           Visibility="{Binding IsEmailPlaceholderVisible, 
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+                
+
+            <!-- Password -->
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" Height="70" Margin="0,0,0,20">
+                <PasswordBox x:Name="PasswordBox"
+                             Style="{StaticResource {x:Type PasswordBox}}"                             
+                             VerticalContentAlignment="Center"
+                             FontSize="28" Padding="16"
+                             Background="#3e3e3e" Foreground="White"
+                             Tag="Password"                             
+                             PasswordChanged="PasswordBox_PasswordChanged"/>
+                <TextBlock Text="Password"
+                           Margin="20,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           Foreground="#777"
+                           IsHitTestVisible="False"
+                           Visibility="{Binding IsPasswordPlaceholderVisible, 
+                                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+
+            <!-- Auth Button -->
+            <Button Grid.Row="2" Grid.Column="0" Content="Login" Height="70" Margin="0,0,10,0" 
+                    FontSize="22" Command="{Binding AuthCommand}"/>
+
+            <!-- Register Button -->
+            <Button Grid.Row="2" Grid.Column="1" Content="Register" Height="70" Margin="10,0,0,0" 
+                    FontSize="22" Command="{Binding RegisterCommand}"/>
+        </Grid>
     </Grid>
 </Window>
