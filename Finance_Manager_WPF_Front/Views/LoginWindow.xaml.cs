@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finance_Manager_WPF_Front.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,21 @@ namespace Finance_Manager_WPF_Front.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        public LoginWindow(LoginViewModel loginViewModel)
         {
             InitializeComponent();
+
+            DataContext = loginViewModel;            
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is LoginViewModel vm && sender is PasswordBox box)
+            {
+                vm.SecurePassword = box.SecurePassword.Copy();
+                if (vm.SecurePassword.Length > 0) vm.IsPasswordPlaceholderVisible = false;
+                else vm.IsPasswordPlaceholderVisible = true;
+            }
         }
     }
 }
