@@ -4,19 +4,16 @@ using System.Runtime.CompilerServices;
 
 namespace Finance_Manager_WPF_Front.Models;
 
-public class Transaction : INotifyPropertyChanged
+public class TransactionModel : INotifyPropertyChanged
 {
     private string _name = string.Empty;
     private decimal _price;
-    private Category _category = new();
-    private List<Category>? _innerCategories = new();    
+    private CategoryModel _category = new();
+    private CategoryModel? _innerCategory = new();    
     //private string _photo = string.Empty;
 
     public int Id { get; set; }
-    //public int CategoryId { get; set; }
-    //public int? InnerCategoryId { get; set; }
-    //public int UserId { get; set; }
-    public User user { get; set; } = new();
+    public UserModel User { get; set; } = new();
 
     public DateTime Date { get; set; } = DateTime.Now;
 
@@ -46,7 +43,7 @@ public class Transaction : INotifyPropertyChanged
         }
     }
 
-    public Category Category
+    public CategoryModel Category
     {
         get => _category;
         set
@@ -59,14 +56,14 @@ public class Transaction : INotifyPropertyChanged
         }
     }
 
-    public List<Category>? InnerCategories
+    public CategoryModel? InnerCategory
     {
-        get => _innerCategories;
+        get => _innerCategory;
         set
         {
-            if (_innerCategories != value)
+            if (_innerCategory != value)
             {
-                _innerCategories = value;
+                _innerCategory = value;
                 OnPropertyChanged();
             }
         }

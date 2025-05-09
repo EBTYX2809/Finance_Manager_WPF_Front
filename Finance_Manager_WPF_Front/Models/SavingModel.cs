@@ -4,15 +4,14 @@ using System.Runtime.CompilerServices;
 
 namespace Finance_Manager_WPF_Front.Models;
 
-public class Saving : INotifyPropertyChanged
+public class SavingModel : INotifyPropertyChanged
 {
     private string _name = string.Empty;
     private decimal _goal;
     private decimal? _currentAmount;
 
     public int Id { get; set; }
-    //public int UserId { get; set; }
-    public User user { get; set; } = new();
+    public UserModel User { get; set; } = new();
 
     public string Name
     {
