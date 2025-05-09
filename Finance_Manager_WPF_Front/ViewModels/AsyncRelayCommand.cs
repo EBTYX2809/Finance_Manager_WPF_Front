@@ -27,7 +27,10 @@ public class AsyncRelayCommand : ICommand
         {
             await _execute(parameter);
         }
-        catch (Exception ex) { }
+        catch (Exception ex) 
+        {
+            Serilog.Log.Error(ex, "Error in command.");
+        }
         finally
         {
             _isExecuting = false;

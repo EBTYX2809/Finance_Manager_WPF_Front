@@ -9,6 +9,8 @@ using System.Net.Http;
 using Finance_Manager_WPF_Front.Services;
 using Finance_Manager_WPF_Front.Models;
 using Finance_Manager_WPF_Front.Services.AuthServices;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Finance_Manager_WPF_Front
 {
@@ -22,13 +24,24 @@ namespace Finance_Manager_WPF_Front
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Services
             var services = new ServiceCollection();
             ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
 
-            /*var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();*/
+            // Logger
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()                
+                .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
 
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog();
+            });
+
+            // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
         }

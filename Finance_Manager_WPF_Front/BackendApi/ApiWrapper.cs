@@ -10,7 +10,7 @@ namespace Finance_Manager_WPF_Front.BackendApi;
 
 public class ApiWrapper
 {
-    private readonly UserSession _userSession;
+    private readonly UserSession _userSession;    
     public ApiWrapper(UserSession userSession)
     {
         _userSession = userSession;
@@ -24,13 +24,11 @@ public class ApiWrapper
         catch (ApiException ex)
         {
             HandleApiException(ex);
-            //return default;
             throw;
         }
         catch (Exception ex)
         {
             HandleUnexpectedException(ex);
-            //return default;
             throw;
         }
     }
@@ -60,12 +58,13 @@ public class ApiWrapper
                 break;
         }
 
-        // Можно ещё логировать: FileLogger.Log(ex)
+        Serilog.Log.Error(ex, "Error in API.");
     }
 
     private void HandleUnexpectedException(Exception ex)
     {
         MessageBox.Show("Unknow error: " + ex.Message);
+        Serilog.Log.Error(ex, "Unexpected Error in API.");
     }
 }
 
