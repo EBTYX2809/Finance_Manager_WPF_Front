@@ -15,5 +15,18 @@ public class AutoMapperProfile : Profile
         CreateMap<CurrencyBalanceDTO, UserCurrencyBalanceModel>();
 
         CreateMap<UserDTO, UserModel>();
+
+        CreateMap<TransactionDTO, TransactionModel>()
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src =>
+            TimeZoneInfo.ConvertTimeFromUtc(src.Date.DateTime, TimeZoneInfo.Local)))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src =>
+            CategoriesStorage.GetCategoryById(src.CategoryId)));
+        CreateMap<TransactionModel, TransactionDTO>();
+
+        CreateMap<SavingDTO, SavingModel>();
+        CreateMap<SavingModel,SavingDTO>();
+
+        CreateMap<CategoryDTO, CategoryModel>();
+        CreateMap<CategoryModel, CategoryDTO>();
     }
 }
