@@ -48,4 +48,37 @@ public class TransactionsService
         }
     }
 
+    public async Task CreateTransactionAsync(TransactionModel transactionModel)
+    {
+        _userSession.CurrentUser.Transactions.Add(transactionModel);
+
+        var transaction = _mapper.Map<TransactionDTO>(transactionModel);
+        transaction.UserId = _userSession.CurrentUser.Id;
+
+        int id = await _apiWrapper.ExecuteAsync(async () => 
+        await _apiClient.CreateTransactionAsync(transaction));
+
+        transactionModel.Id = id; // Recieved id from data base
+    }
+
+    public async Task UpdateTransactionAsync(TransactionModel transactionModel)
+    {
+        var oldTransaction = _userSession.CurrentUser.Transactions.FirstOrDefault(t => t.Id == transactionModel.Id);
+
+        oldTransaction = transactionModel;
+
+        var transaction = _mapper.Map<TransactionDTO>(transactionModel);
+        transaction.UserId = _userSession.CurrentUser.Id;
+
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.UpdateTransactionAsync(transaction));
+    }
+
+    public async Task DeleteTransactionAsync(TransactionModel transactionModel)
+    {
+        _userSession.CurrentUser.Transactions.Remove(transactionModel);
+
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.DeleteTransactionAsync(transactionModel.Id));
+    }
 }
