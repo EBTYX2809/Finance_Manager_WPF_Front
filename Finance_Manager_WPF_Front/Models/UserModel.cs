@@ -8,8 +8,8 @@ public class UserModel : INotifyPropertyChanged
 {
     private string _email = string.Empty;
     private UserCurrencyBalanceModel _primaryCurrencyBalance;
-    private UserCurrencyBalanceModel _secondaryCurrencyBalance1;
-    private UserCurrencyBalanceModel _secondaryCurrencyBalance2;
+    private UserCurrencyBalanceModel? _secondaryCurrencyBalance1;
+    private UserCurrencyBalanceModel? _secondaryCurrencyBalance2;
     private ObservableCollection<TransactionModel> _transactions = new();
     private ObservableCollection<SavingModel> _savings = new();
 
@@ -41,7 +41,7 @@ public class UserModel : INotifyPropertyChanged
         }
     }
 
-    public UserCurrencyBalanceModel SecondaryCurrencyBalance1
+    public UserCurrencyBalanceModel? SecondaryCurrencyBalance1
     {
         get => _secondaryCurrencyBalance1;
         set
@@ -54,7 +54,7 @@ public class UserModel : INotifyPropertyChanged
         }
     }
 
-    public UserCurrencyBalanceModel SecondaryCurrencyBalance2
+    public UserCurrencyBalanceModel? SecondaryCurrencyBalance2
     {
         get => _secondaryCurrencyBalance2;
         set
