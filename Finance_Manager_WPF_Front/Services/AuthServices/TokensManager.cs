@@ -70,11 +70,8 @@ public class TokensManager
             payload = payload.PadRight(payload.Length + (4 - payload.Length % 4) % 4, '=');
             var json = Encoding.UTF8.GetString(Convert.FromBase64String(payload));
 
-            var payloadData = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-            if (payloadData == null || !payloadData.TryGetValue("exp", out var expObj))
-                return false;
+            var exp = JsonDocument.Parse(json).RootElement.GetProperty("exp").GetInt64();
 
-            var exp = Convert.ToInt64(expObj);
             var expirationTime = DateTimeOffset.FromUnixTimeSeconds(exp);
             return expirationTime > DateTimeOffset.UtcNow;
         }
