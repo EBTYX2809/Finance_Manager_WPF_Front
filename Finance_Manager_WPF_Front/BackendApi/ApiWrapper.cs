@@ -15,11 +15,30 @@ public class ApiWrapper
     {
         _userSession = userSession;
     }
+
     public async Task<T?> ExecuteAsync<T>(Func<Task<T>> apiCall)
     {
         try
         {
             return await apiCall();
+        }
+        catch (ApiException ex)
+        {
+            HandleApiException(ex);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            HandleUnexpectedException(ex);
+            throw;
+        }
+    }
+
+    public async Task ExecuteAsync(Func<Task> apiCall)
+    {
+        try
+        {
+            await apiCall();
         }
         catch (ApiException ex)
         {
