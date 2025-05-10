@@ -2,6 +2,7 @@
 using System.Windows;
 using Finance_Manager_WPF_Front.BackendApi;
 using Finance_Manager_WPF_Front.Models;
+using Finance_Manager_WPF_Front.Services;
 
 namespace Finance_Manager_WPF_Front.Views;
 
@@ -10,29 +11,34 @@ namespace Finance_Manager_WPF_Front.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly HttpClient _httpClient;
-    public MainWindow(/*HttpClient httpClient*/)
+    private readonly UserSession _userSession;
+    private readonly UserService _userService;
+    private readonly CategoriesService _categoriesService;
+    private readonly TransactionsService _transactionsService;
+    private readonly SavingsService _savingsService;
+    public MainWindow(UserSession userSession, UserService userService, CategoriesService categoriesService, TransactionsService transactionsService, SavingsService savingsService)
     {
         InitializeComponent();
-        
-        _httpClient = new HttpClient(); // httpClient
+        _userSession = userSession;
+        _userService = userService;
+        _categoriesService = categoriesService;
+        _transactionsService = transactionsService;
+        _savingsService = savingsService;
 
-        MainTest();
+        Loaded += MainWindow_Loaded;
     }
 
-    public async Task MainTest()
+    private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        var apiClient = new FinanceApiClient("https://localhost:49464", _httpClient);
+        await LoadStartupUserData();
+        MessageBox.Show($"I'm here: {_userSession.CurrentUser?.Email}.");
+    }
 
-        var categories = await apiClient.CategoriesAllAsync();
-
-        string names = string.Empty;
-
-        foreach (var category in categories) 
-        {
-            names += $"Name: {category.Name}\n";
-        }
-
-        MessageBox.Show(names);
+    private async Task LoadStartupUserData()
+    {
+        await _userService.UpdateUserBalance();
+        await _categoriesService.LoadAllCategories();
+        await _transactionsService.GetTransactionsPage();
+        await _savingsService.GetSavingsPage();       
     }
 }
