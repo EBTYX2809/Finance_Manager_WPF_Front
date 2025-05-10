@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+#nullable enable
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -71,6 +73,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
 
         partial void Initialize();
 
+        /// <summary>
+        /// Get category by id.
+        /// </summary>
+        /// <param name="id">Category id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CategoryDTO> GetCategoryAsync(int id)
+        {
+            return GetCategoryAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get category by id.
@@ -78,7 +91,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Category id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CategoryDTO> GetCategoryAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<CategoryDTO> GetCategoryAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -166,6 +179,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Delete category by id.
+        /// </summary>
+        /// <param name="id">Category id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteCategoryAsync(int id)
+        {
+            return DeleteCategoryAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Delete category by id.
@@ -173,7 +197,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Category id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteCategoryAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task DeleteCategoryAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -275,13 +299,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Create all categories and seed them in data base.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task CreateAllCategoriesAsync()
+        {
+            return CreateAllCategoriesAsync(System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create all categories and seed them in data base.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task CreateAllCategoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task CreateAllCategoriesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -360,6 +394,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Create category.
+        /// </summary>
+        /// <param name="body">CategoryDTO to create.</param>
+        /// <returns>Category successfully created.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<int> CreateCategoryAsync(CategoryDTO? body)
+        {
+            return CreateCategoryAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create category.
@@ -367,7 +412,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">CategoryDTO to create.</param>
         /// <returns>Category successfully created.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<int> CreateCategoryAsync(CategoryDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<int> CreateCategoryAsync(CategoryDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -377,7 +422,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -475,6 +520,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Update category.
+        /// </summary>
+        /// <param name="body">New categoryDTO object.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task UpdateCategoryAsync(CategoryDTO? body)
+        {
+            return UpdateCategoryAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Update category.
@@ -482,7 +538,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">New categoryDTO object.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateCategoryAsync(CategoryDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task UpdateCategoryAsync(CategoryDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -492,7 +548,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -594,13 +650,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get spending analytics in date range.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetAnalyticsAsync(int? userId, System.DateTimeOffset? minDate, System.DateTimeOffset? maxDate)
+        {
+            return GetAnalyticsAsync(userId, minDate, maxDate, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get spending analytics in date range.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetAnalyticsAsync(int? userId = null, System.DateTimeOffset? minDate = null, System.DateTimeOffset? maxDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetAnalyticsAsync(int? userId, System.DateTimeOffset? minDate, System.DateTimeOffset? maxDate, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -708,13 +774,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get spending analytics from general category in date range.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetInnerAnalyticsAsync(int? parentCategoryId, int? userId, System.DateTimeOffset? minDate, System.DateTimeOffset? maxDate)
+        {
+            return GetInnerAnalyticsAsync(parentCategoryId, userId, minDate, maxDate, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get spending analytics from general category in date range.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetInnerAnalyticsAsync(int? parentCategoryId = null, int? userId = null, System.DateTimeOffset? minDate = null, System.DateTimeOffset? maxDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryPercentDTO>> GetInnerAnalyticsAsync(int? parentCategoryId, int? userId, System.DateTimeOffset? minDate, System.DateTimeOffset? maxDate, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -826,6 +902,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Register new user.
+        /// </summary>
+        /// <param name="body">AuthDataDTO with email and password</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<AuthUserTokensDTO> RegisterAsync(AuthDataDTO? body)
+        {
+            return RegisterAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Register new user.
@@ -833,7 +920,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">AuthDataDTO with email and password</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> RegisterAsync(AuthDataDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> RegisterAsync(AuthDataDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -843,7 +930,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -853,12 +940,12 @@ namespace Finance_Manager_WPF_Front.BackendApi
                     // Operation Path: "api/Auth/register"
                     urlBuilder_.Append("api/Auth/register");
 
-                    //await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
 
-                    //await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
@@ -919,6 +1006,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 if (disposeClient_)
                     client_.Dispose();
             }
+        }
+
+        /// <summary>
+        /// Authenticate user.
+        /// </summary>
+        /// <param name="body">AuthDataDTO with email and password</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<AuthUserTokensDTO> AuthenticateAsync(AuthDataDTO? body)
+        {
+            return AuthenticateAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -928,7 +1026,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">AuthDataDTO with email and password</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> AuthenticateAsync(AuthDataDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> AuthenticateAsync(AuthDataDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -938,7 +1036,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -948,12 +1046,12 @@ namespace Finance_Manager_WPF_Front.BackendApi
                     // Operation Path: "api/Auth/authenticate"
                     urlBuilder_.Append("api/Auth/authenticate");
 
-                    //await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
 
-                    //await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
@@ -1016,6 +1114,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Authenticate user with refresh token.
+        /// </summary>
+        /// <param name="body">Refresh token.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<AuthUserTokensDTO> RefreshTokenAsync(string? body)
+        {
+            return RefreshTokenAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Authenticate user with refresh token.
@@ -1023,7 +1132,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">Refresh token.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> RefreshTokenAsync(string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthUserTokensDTO> RefreshTokenAsync(string? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1033,7 +1142,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -1043,13 +1152,12 @@ namespace Finance_Manager_WPF_Front.BackendApi
                     // Operation Path: "api/Auth/refresh-token"
                     urlBuilder_.Append("api/Auth/refresh-token");
 
-                    // PrepareRequestAsync invokes recursion
-                    //await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
 
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
 
-                    //await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
+                    await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
 
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     var disposeResponse_ = true;
@@ -1122,6 +1230,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get category by id.
+        /// </summary>
+        /// <param name="id">Category id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CategoryDTO> GetCategory2Async(int id)
+        {
+            return GetCategory2Async(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get category by id.
@@ -1129,7 +1248,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Category id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CategoryDTO> GetCategory2Async(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<CategoryDTO> GetCategory2Async(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1217,13 +1336,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get list of all categories.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryDTO>> GetAllCategoriesAsync()
+        {
+            return GetAllCategoriesAsync(System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get list of all categories.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryDTO>> GetAllCategoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CategoryDTO>> GetAllCategoriesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1297,6 +1426,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Create saving.
+        /// </summary>
+        /// <param name="body">The savingDTO to create.</param>
+        /// <returns>Saving successfully created.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<int> CreateSavingAsync(SavingDTO? body)
+        {
+            return CreateSavingAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create saving.
@@ -1304,7 +1444,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">The savingDTO to create.</param>
         /// <returns>Saving successfully created.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<int> CreateSavingAsync(SavingDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<int> CreateSavingAsync(SavingDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1314,7 +1454,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -1412,13 +1552,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get list of savings.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SavingDTO>> GetSavingsAsync(int? userId, int? previousSavingId, int? pageSize)
+        {
+            return GetSavingsAsync(userId, previousSavingId, pageSize, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get list of savings.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SavingDTO>> GetSavingsAsync(int? userId = null, int? previousSavingId = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SavingDTO>> GetSavingsAsync(int? userId, int? previousSavingId, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1526,6 +1676,19 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Update saving with new top up.
+        /// </summary>
+        /// <param name="body">TopUpDTO with parameters:
+        /// <br/>            savingId - Saving id;
+        /// <br/>            topUpAmount - Amount of top up.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task UpdateSavingAsync(SavingTopUpDTO? body)
+        {
+            return UpdateSavingAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Update saving with new top up.
@@ -1535,7 +1698,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <br/>            topUpAmount - Amount of top up.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateSavingAsync(SavingTopUpDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task UpdateSavingAsync(SavingTopUpDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1545,7 +1708,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -1637,6 +1800,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get saving by id.
+        /// </summary>
+        /// <param name="id">Saving id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<SavingDTO> GetSavingAsync(int id)
+        {
+            return GetSavingAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get saving by id.
@@ -1644,7 +1818,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Saving id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SavingDTO> GetSavingAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<SavingDTO> GetSavingAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1732,6 +1906,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Delete saving by id.
+        /// </summary>
+        /// <param name="id">Saving id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteSavingAsync(int id)
+        {
+            return DeleteSavingAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Delete saving by id.
@@ -1739,7 +1924,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Saving id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteSavingAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task DeleteSavingAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1831,6 +2016,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Create transaction.
+        /// </summary>
+        /// <param name="body">The transactionDTO to create.</param>
+        /// <returns>Transaction successfully created.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<int> CreateTransactionAsync(TransactionDTO? body)
+        {
+            return CreateTransactionAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Create transaction.
@@ -1838,7 +2034,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">The transactionDTO to create.</param>
         /// <returns>Transaction successfully created.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<int> CreateTransactionAsync(TransactionDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<int> CreateTransactionAsync(TransactionDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1848,7 +2044,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
@@ -1946,13 +2142,23 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get list of transactions.
+        /// </summary>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TransactionDTO>> GetTransactionsAsync(int? userId, System.DateTimeOffset? lastDate, int? pageSize)
+        {
+            return GetTransactionsAsync(userId, lastDate, pageSize, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get list of transactions.
         /// </summary>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TransactionDTO>> GetTransactionsAsync(int? userId = null, System.DateTimeOffset? lastDate = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TransactionDTO>> GetTransactionsAsync(int? userId, System.DateTimeOffset? lastDate, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2060,6 +2266,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Update transaction with new data.
+        /// </summary>
+        /// <param name="body">New transactionDTO object.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task UpdateTransactionAsync(TransactionDTO? body)
+        {
+            return UpdateTransactionAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Update transaction with new data.
@@ -2067,7 +2284,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="body">New transactionDTO object.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateTransactionAsync(TransactionDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task UpdateTransactionAsync(TransactionDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2077,7 +2294,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -2169,6 +2386,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get transaction by id.
+        /// </summary>
+        /// <param name="id">Transaction id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<Transaction> GetTransactionAsync(int id)
+        {
+            return GetTransactionAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get transaction by id.
@@ -2176,7 +2404,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Transaction id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Transaction> GetTransactionAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Transaction> GetTransactionAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2264,6 +2492,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Delete transaction by id.
+        /// </summary>
+        /// <param name="id">Transaction id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteTransactionAsync(int id)
+        {
+            return DeleteTransactionAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Delete transaction by id.
@@ -2271,7 +2510,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">Transaction id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteTransactionAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task DeleteTransactionAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2363,6 +2602,17 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Get user balance by id.
+        /// </summary>
+        /// <param name="id">User id.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UserBalanceDTO> GetBalanceAsync(int id)
+        {
+            return GetBalanceAsync(id, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Get user balance by id.
@@ -2370,7 +2620,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <param name="id">User id.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UserBalanceDTO> GetBalanceAsync(int id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserBalanceDTO> GetBalanceAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2458,6 +2708,20 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
+        /// <summary>
+        /// Update user currency.
+        /// </summary>
+        /// <param name="body">currencyQueryDTO with parameters:
+        /// <br/>            UserId - user id;
+        /// <br/>            CurrencyRang - rang of currency that will be update, can be "Primary", "Secondary1" or "Secondary2".
+        /// <br/>            CurrencyCode - code for this currency.</param>
+        /// <returns>Success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task UpdateCurrencyAsync(UpdateUserCurrencyQueryDTO? body)
+        {
+            return UpdateCurrencyAsync(body, System.Threading.CancellationToken.None);
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Update user currency.
@@ -2468,7 +2732,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         /// <br/>            CurrencyCode - code for this currency.</param>
         /// <returns>Success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateCurrencyAsync(UpdateUserCurrencyQueryDTO body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task UpdateCurrencyAsync(UpdateUserCurrencyQueryDTO? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2478,7 +2742,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, RequestJsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -2589,7 +2853,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
         {
             if (response == null || response.Content == null)
             {
-                return new ObjectResponseResult<T>(default(T), string.Empty);
+                return new ObjectResponseResult<T>(default(T)!, string.Empty);
             }
 
             if (ReadResponseAsString)
@@ -2598,7 +2862,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                 try
                 {
                     var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, ResponseJsonSerializerSettings);
-                    return new ObjectResponseResult<T>(typedBody, responseText);
+                    return new ObjectResponseResult<T>(typedBody!, responseText);
                 }
                 catch (Newtonsoft.Json.JsonException exception)
                 {
@@ -2616,7 +2880,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
                     {
                         var serializer = Newtonsoft.Json.JsonSerializer.Create(ResponseJsonSerializerSettings);
                         var typedBody = serializer.Deserialize<T>(jsonTextReader);
-                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                        return new ObjectResponseResult<T>(typedBody!, string.Empty);
                     }
                 }
                 catch (Newtonsoft.Json.JsonException exception)
@@ -2627,7 +2891,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
             }
         }
 
-        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        private string ConvertToString(object? value, System.Globalization.CultureInfo cultureInfo)
         {
             if (value == null)
             {
@@ -2685,25 +2949,30 @@ namespace Finance_Manager_WPF_Front.BackendApi
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthDataDTO
     {
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Email { get; set; }
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Email { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Password { get; set; }
+        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Password { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AuthUserTokensDTO
     {
-        [Newtonsoft.Json.JsonProperty("userDTO", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public UserDTO UserDTO { get; set; }
+        [Newtonsoft.Json.JsonProperty("userDTO", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public UserDTO UserDTO { get; set; } = new UserDTO();
 
-        [Newtonsoft.Json.JsonProperty("accessJwtToken", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AccessJwtToken { get; set; }
+        [Newtonsoft.Json.JsonProperty("accessJwtToken", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string AccessJwtToken { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("refreshToken", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RefreshToken { get; set; }
+        [Newtonsoft.Json.JsonProperty("refreshToken", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string RefreshToken { get; set; } = default!;
 
     }
 
@@ -2711,76 +2980,81 @@ namespace Finance_Manager_WPF_Front.BackendApi
     public partial class Category
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("isIncome", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsIncome { get; set; }
+        public bool IsIncome { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("icon", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Icon { get; set; }
+        public string? Icon { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("colorForBackground", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ColorForBackground { get; set; }
+        public string? ColorForBackground { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("parentCategoryId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? ParentCategoryId { get; set; }
+        public int? ParentCategoryId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("innerCategories", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Category> InnerCategories { get; set; }
+        public System.Collections.Generic.ICollection<Category>? InnerCategories { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("parentCategory", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Category ParentCategory { get; set; }
+        [Newtonsoft.Json.JsonProperty("parentCategory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Category? ParentCategory { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CategoryDTO
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("isIncome", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsIncome { get; set; }
+        [Newtonsoft.Json.JsonProperty("isIncome", Required = Newtonsoft.Json.Required.Always)]
+        public bool IsIncome { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("icon", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Icon { get; set; }
+        [Newtonsoft.Json.JsonProperty("icon", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Icon { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("colorForBackground", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ColorForBackground { get; set; }
+        [Newtonsoft.Json.JsonProperty("colorForBackground", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string ColorForBackground { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("parentCategoryId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? ParentCategoryId { get; set; }
+        public int? ParentCategoryId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("innerCategories", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<CategoryDTO> InnerCategories { get; set; }
+        public System.Collections.Generic.ICollection<CategoryDTO>? InnerCategories { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CategoryPercentDTO
     {
-        [Newtonsoft.Json.JsonProperty("categoryDTO", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CategoryDTO CategoryDTO { get; set; }
+        [Newtonsoft.Json.JsonProperty("categoryDTO", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public CategoryDTO CategoryDTO { get; set; } = new CategoryDTO();
 
-        [Newtonsoft.Json.JsonProperty("percent", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public float Percent { get; set; }
+        [Newtonsoft.Json.JsonProperty("percent", Required = Newtonsoft.Json.Required.Always)]
+        public float Percent { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CurrencyBalanceDTO
     {
-        [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Currency { get; set; }
+        [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Currency { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal Balance { get; set; }
+        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.Always)]
+        public decimal Balance { get; set; } = default!;
 
     }
 
@@ -2788,21 +3062,21 @@ namespace Finance_Manager_WPF_Front.BackendApi
     public partial class ProblemDetails
     {
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Type { get; set; }
+        public string? Type { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Title { get; set; }
+        public string? Title { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Status { get; set; }
+        public int? Status { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Detail { get; set; }
+        public string? Detail { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Instance { get; set; }
+        public string? Instance { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
         [Newtonsoft.Json.JsonExtensionData]
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
@@ -2817,53 +3091,54 @@ namespace Finance_Manager_WPF_Front.BackendApi
     public partial class Saving
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("goal", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Goal { get; set; }
+        public double Goal { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("currentAmount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double CurrentAmount { get; set; }
+        public double CurrentAmount { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int UserId { get; set; }
+        public int UserId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public User User { get; set; }
+        [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public User? User { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SavingDTO
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("goal", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Goal { get; set; }
+        [Newtonsoft.Json.JsonProperty("goal", Required = Newtonsoft.Json.Required.Always)]
+        public decimal Goal { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("currentAmount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double CurrentAmount { get; set; }
+        [Newtonsoft.Json.JsonProperty("currentAmount", Required = Newtonsoft.Json.Required.Always)]
+        public decimal CurrentAmount { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int UserId { get; set; }
+        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
+        public int UserId { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SavingTopUpDTO
     {
-        [Newtonsoft.Json.JsonProperty("savingId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int SavingId { get; set; }
+        [Newtonsoft.Json.JsonProperty("savingId", Required = Newtonsoft.Json.Required.Always)]
+        public int SavingId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("topUpAmount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int TopUpAmount { get; set; }
+        [Newtonsoft.Json.JsonProperty("topUpAmount", Required = Newtonsoft.Json.Required.Always)]
+        public decimal TopUpAmount { get; set; } = default!;
 
     }
 
@@ -2871,77 +3146,81 @@ namespace Finance_Manager_WPF_Front.BackendApi
     public partial class Transaction
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Price { get; set; }
+        public double Price { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset Date { get; set; }
+        public System.DateTimeOffset Date { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("category", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Category Category { get; set; }
+        [Newtonsoft.Json.JsonProperty("category", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Category? Category { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("categoryId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("innerCategory", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Category InnerCategory { get; set; }
+        [Newtonsoft.Json.JsonProperty("innerCategory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Category? InnerCategory { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("innerCategoryId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? InnerCategoryId { get; set; }
+        public int? InnerCategoryId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("photo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Photo { get; set; }
+        public string? Photo { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int UserId { get; set; }
+        public int UserId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public User User { get; set; }
+        [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public User? User { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class TransactionDTO
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public double Price { get; set; }
+        [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
+        public decimal Price { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset Date { get; set; }
+        [Newtonsoft.Json.JsonProperty("date", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTimeOffset Date { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("categoryId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int CategoryId { get; set; }
+        [Newtonsoft.Json.JsonProperty("categoryId", Required = Newtonsoft.Json.Required.Always)]
+        public int CategoryId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("innerCategoryId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? InnerCategoryId { get; set; }
+        public int? InnerCategoryId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int UserId { get; set; }
+        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
+        public int UserId { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateUserCurrencyQueryDTO
     {
-        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int UserId { get; set; }
+        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
+        public int UserId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("currencyRang", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CurrencyRang { get; set; }
+        [Newtonsoft.Json.JsonProperty("currencyRang", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string CurrencyRang { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("currencyCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CurrencyCode { get; set; }
+        [Newtonsoft.Json.JsonProperty("currencyCode", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string CurrencyCode { get; set; } = default!;
 
     }
 
@@ -2949,65 +3228,67 @@ namespace Finance_Manager_WPF_Front.BackendApi
     public partial class User
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Email { get; set; }
+        public string? Email { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("salt", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Salt { get; set; }
+        public string? Salt { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("passwordHash", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PasswordHash { get; set; }
+        public string? PasswordHash { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Role { get; set; }
+        public string? Role { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal Balance { get; set; }
+        public double Balance { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("primaryCurrency", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PrimaryCurrency { get; set; }
+        public string? PrimaryCurrency { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("secondaryCurrency1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SecondaryCurrency1 { get; set; }
+        public string? SecondaryCurrency1 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("secondaryCurrency2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SecondaryCurrency2 { get; set; }
+        public string? SecondaryCurrency2 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("transactions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Transaction> Transactions { get; set; }
+        public System.Collections.Generic.ICollection<Transaction>? Transactions { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("savings", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Saving> Savings { get; set; }
+        public System.Collections.Generic.ICollection<Saving>? Savings { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UserBalanceDTO
     {
-        [Newtonsoft.Json.JsonProperty("primaryBalance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CurrencyBalanceDTO PrimaryBalance { get; set; }
+        [Newtonsoft.Json.JsonProperty("primaryBalance", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public CurrencyBalanceDTO PrimaryBalance { get; set; } = new CurrencyBalanceDTO();
 
-        [Newtonsoft.Json.JsonProperty("secondaryBalance1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CurrencyBalanceDTO SecondaryBalance1 { get; set; }
+        [Newtonsoft.Json.JsonProperty("secondaryBalance1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CurrencyBalanceDTO? SecondaryBalance1 { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("secondaryBalance2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CurrencyBalanceDTO SecondaryBalance2 { get; set; }
+        [Newtonsoft.Json.JsonProperty("secondaryBalance2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CurrencyBalanceDTO? SecondaryBalance2 { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UserDTO
     {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Email { get; set; }
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Email { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal Balance { get; set; }
+        [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.Always)]
+        public decimal Balance { get; set; } = default!;
 
     }
 
@@ -3018,11 +3299,11 @@ namespace Finance_Manager_WPF_Front.BackendApi
     {
         public int StatusCode { get; private set; }
 
-        public string Response { get; private set; }
+        public string? Response { get; private set; }
 
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
-        public ApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
+        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception? innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -3041,7 +3322,7 @@ namespace Finance_Manager_WPF_Front.BackendApi
     {
         public TResult Result { get; private set; }
 
-        public ApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
+        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception? innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;

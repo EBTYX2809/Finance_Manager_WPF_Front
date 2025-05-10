@@ -205,19 +205,68 @@
         "requestBody": {
           "description": "CategoryDTO to create.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             }
           }
@@ -322,19 +371,68 @@
         "requestBody": {
           "description": "New categoryDTO object.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "isIncome",
+                  "icon",
+                  "colorForBackground"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CategoryDTO"
+                  }
+                ]
               }
             }
           }
@@ -665,19 +763,56 @@
         "requestBody": {
           "description": "AuthDataDTO with email and password",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             }
           }
@@ -739,19 +874,56 @@
         "requestBody": {
           "description": "AuthDataDTO with email and password",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthDataDTO"
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthDataDTO"
+                  }
+                ]
               }
             }
           }
@@ -813,6 +985,11 @@
         "requestBody": {
           "description": "Refresh token.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "string"
+              }
+            },
             "application/json": {
               "schema": {
                 "type": "string"
@@ -1016,19 +1193,68 @@
         "requestBody": {
           "description": "The savingDTO to create.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "id",
+                  "name",
+                  "goal",
+                  "currentAmount",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "goal",
+                  "currentAmount",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "goal",
+                  "currentAmount",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "goal",
+                  "currentAmount",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingDTO"
+                  }
+                ]
               }
             }
           }
@@ -1238,19 +1464,56 @@
         "requestBody": {
           "description": "TopUpDTO with parameters:\r\n            savingId - Saving id;\r\n            topUpAmount - Amount of top up.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "savingId",
+                  "topUpAmount"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingTopUpDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingTopUpDTO"
+                "required": [
+                  "savingId",
+                  "topUpAmount"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingTopUpDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingTopUpDTO"
+                "required": [
+                  "savingId",
+                  "topUpAmount"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingTopUpDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SavingTopUpDTO"
+                "required": [
+                  "savingId",
+                  "topUpAmount"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/SavingTopUpDTO"
+                  }
+                ]
               }
             }
           }
@@ -1468,19 +1731,72 @@
         "requestBody": {
           "description": "The transactionDTO to create.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             }
           }
@@ -1690,19 +2006,72 @@
         "requestBody": {
           "description": "New transactionDTO object.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TransactionDTO"
+                "required": [
+                  "id",
+                  "name",
+                  "price",
+                  "date",
+                  "categoryId",
+                  "userId"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                ]
               }
             }
           }
@@ -1986,19 +2355,60 @@
         "requestBody": {
           "description": "currencyQueryDTO with parameters:\r\n            UserId - user id;\r\n            CurrencyRang - rang of currency that will be update, can be \"Primary\", \"Secondary1\" or \"Secondary2\".\r\n            CurrencyCode - code for this currency.",
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "required": [
+                  "userId",
+                  "currencyRang",
+                  "currencyCode"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                  }
+                ]
+              }
+            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                "required": [
+                  "userId",
+                  "currencyRang",
+                  "currencyCode"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                "required": [
+                  "userId",
+                  "currencyRang",
+                  "currencyCode"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                "required": [
+                  "userId",
+                  "currencyRang",
+                  "currencyCode"
+                ],
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdateUserCurrencyQueryDTO"
+                  }
+                ]
               }
             }
           }
@@ -2077,32 +2487,46 @@
   "components": {
     "schemas": {
       "AuthDataDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "AuthUserTokensDTO": {
+        "required": [
+          "accessJwtToken",
+          "refreshToken",
+          "userDTO"
+        ],
         "type": "object",
         "properties": {
           "userDTO": {
-            "$ref": "#/components/schemas/UserDTO"
+            "required": [
+              "id",
+              "email",
+              "balance"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            ]
           },
           "accessJwtToken": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "refreshToken": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -2142,12 +2566,24 @@
             "nullable": true
           },
           "parentCategory": {
-            "$ref": "#/components/schemas/Category"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "CategoryDTO": {
+        "required": [
+          "colorForBackground",
+          "icon",
+          "id",
+          "isIncome",
+          "name"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2155,19 +2591,16 @@
             "format": "int32"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "isIncome": {
             "type": "boolean"
           },
           "icon": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "colorForBackground": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "parentCategoryId": {
             "type": "integer",
@@ -2185,10 +2618,25 @@
         "additionalProperties": false
       },
       "CategoryPercentDTO": {
+        "required": [
+          "categoryDTO",
+          "percent"
+        ],
         "type": "object",
         "properties": {
           "categoryDTO": {
-            "$ref": "#/components/schemas/CategoryDTO"
+            "required": [
+              "id",
+              "name",
+              "isIncome",
+              "icon",
+              "colorForBackground"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryDTO"
+              }
+            ]
           },
           "percent": {
             "type": "number",
@@ -2198,11 +2646,14 @@
         "additionalProperties": false
       },
       "CurrencyBalanceDTO": {
+        "required": [
+          "balance",
+          "currency"
+        ],
         "type": "object",
         "properties": {
           "currency": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "balance": {
             "type": "number",
@@ -2262,12 +2713,24 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "SavingDTO": {
+        "required": [
+          "currentAmount",
+          "goal",
+          "id",
+          "name",
+          "userId"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2275,16 +2738,15 @@
             "format": "int32"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "goal": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           },
           "currentAmount": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           },
           "userId": {
             "type": "integer",
@@ -2294,6 +2756,10 @@
         "additionalProperties": false
       },
       "SavingTopUpDTO": {
+        "required": [
+          "savingId",
+          "topUpAmount"
+        ],
         "type": "object",
         "properties": {
           "savingId": {
@@ -2301,8 +2767,8 @@
             "format": "int32"
           },
           "topUpAmount": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "decimal"
           }
         },
         "additionalProperties": false
@@ -2327,14 +2793,24 @@
             "format": "date-time"
           },
           "category": {
-            "$ref": "#/components/schemas/Category"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              }
+            ],
+            "nullable": true
           },
           "categoryId": {
             "type": "integer",
             "format": "int32"
           },
           "innerCategory": {
-            "$ref": "#/components/schemas/Category"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              }
+            ],
+            "nullable": true
           },
           "innerCategoryId": {
             "type": "integer",
@@ -2350,12 +2826,25 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "TransactionDTO": {
+        "required": [
+          "categoryId",
+          "date",
+          "id",
+          "name",
+          "price",
+          "userId"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2363,12 +2852,11 @@
             "format": "int32"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "price": {
             "type": "number",
-            "format": "double"
+            "format": "decimal"
           },
           "date": {
             "type": "string",
@@ -2391,6 +2879,11 @@
         "additionalProperties": false
       },
       "UpdateUserCurrencyQueryDTO": {
+        "required": [
+          "currencyCode",
+          "currencyRang",
+          "userId"
+        ],
         "type": "object",
         "properties": {
           "userId": {
@@ -2398,12 +2891,10 @@
             "format": "int32"
           },
           "currencyRang": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "currencyCode": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -2433,7 +2924,7 @@
           },
           "balance": {
             "type": "number",
-            "format": "decimal"
+            "format": "double"
           },
           "primaryCurrency": {
             "type": "string",
@@ -2465,21 +2956,55 @@
         "additionalProperties": false
       },
       "UserBalanceDTO": {
+        "required": [
+          "primaryBalance"
+        ],
         "type": "object",
         "properties": {
           "primaryBalance": {
-            "$ref": "#/components/schemas/CurrencyBalanceDTO"
+            "required": [
+              "currency",
+              "balance"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyBalanceDTO"
+              }
+            ]
           },
           "secondaryBalance1": {
-            "$ref": "#/components/schemas/CurrencyBalanceDTO"
+            "required": [
+              "currency",
+              "balance"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyBalanceDTO"
+              }
+            ],
+            "nullable": true
           },
           "secondaryBalance2": {
-            "$ref": "#/components/schemas/CurrencyBalanceDTO"
+            "required": [
+              "currency",
+              "balance"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyBalanceDTO"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "UserDTO": {
+        "required": [
+          "balance",
+          "email",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2487,8 +3012,7 @@
             "format": "int32"
           },
           "email": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "balance": {
             "type": "number",

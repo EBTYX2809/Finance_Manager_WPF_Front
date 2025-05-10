@@ -20,6 +20,8 @@ public partial class FinanceApiClient
     private async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, 
         string url, CancellationToken cancellationToken = default)
     {
+        if (request.RequestUri.AbsolutePath.Contains("/api/Auth")) return;
+
         var token = await _tokensManager.GetAccessTokenAsync();        
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -28,6 +30,8 @@ public partial class FinanceApiClient
     private async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, 
         StringBuilder urlBuilder, CancellationToken cancellationToken = default)
     {
+        if (urlBuilder.ToString().Contains("/api/Auth")) return;
+
         var token = await _tokensManager.GetAccessTokenAsync();
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
