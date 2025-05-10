@@ -39,7 +39,7 @@ namespace Finance_Manager_WPF_Front
             {
                 loggingBuilder.ClearProviders();
                 loggingBuilder.AddSerilog();
-            });
+            });            
 
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
@@ -67,6 +67,9 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<AuthService>();
             services.AddSingleton<TokensManager>();
             services.AddSingleton<UserService>();
+            services.AddSingleton<CategoriesService>();
+            services.AddSingleton<TransactionsService>();
+            services.AddSingleton<SavingsService>();
 
             // ViewModels
             services.AddSingleton<LoginViewModel>();
