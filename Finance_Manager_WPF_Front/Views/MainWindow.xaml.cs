@@ -36,9 +36,9 @@ public partial class MainWindow : Window
 
     private async Task LoadStartupUserData()
     {
-        await _userService.UpdateUserBalance();
-        await _categoriesService.LoadAllCategories();
-        await _transactionsService.GetTransactionsPage();
-        await _savingsService.GetSavingsPage();       
+        await _userService.UpdateUserBalanceAsync();
+        await _categoriesService.LoadAllCategoriesAsync();
+        await _transactionsService.GetTransactionsPageAsync();
+        await _savingsService.GetSavingsPageAsync();       
     }
 }

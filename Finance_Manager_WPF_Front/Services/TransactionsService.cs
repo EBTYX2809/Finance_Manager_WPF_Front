@@ -24,7 +24,7 @@ public class TransactionsService
         _userSession = userSession;
     }
 
-    public async Task GetTransactionsPage(int pageSize = 10)
+    public async Task GetTransactionsPageAsync(int pageSize = 10)
     {
         DateTimeOffset date = new DateTimeOffset(DateTime.Now.ToUniversalTime(), TimeSpan.Zero);
 
@@ -47,4 +47,5 @@ public class TransactionsService
             _userSession.CurrentUser.Transactions.Add(transaction);
         }
     }
+
 }

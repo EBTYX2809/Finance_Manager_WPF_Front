@@ -24,7 +24,7 @@ public class UserService
         _apiWrapper = apiWrapper;
     }
 
-    public async Task UpdateUserBalance()
+    public async Task UpdateUserBalanceAsync()
     {
         var balanceDTO = await _apiWrapper.ExecuteAsync(async () =>
         await _apiClient.GetBalanceAsync(_userSession.CurrentUser.Id));

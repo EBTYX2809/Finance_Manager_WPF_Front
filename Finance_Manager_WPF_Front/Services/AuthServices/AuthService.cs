@@ -28,7 +28,7 @@ public class AuthService
         _apiWrapper = apiWrapper;
     }
 
-    public async Task RegisterUser(string email, SecureString securePassword)
+    public async Task RegisterUserAsync(string email, SecureString securePassword)
     {
         string password = null;
         var ptr = IntPtr.Zero;
@@ -56,7 +56,7 @@ public class AuthService
         }                       
     }
 
-    public async Task AuthUser(string email, SecureString securePassword)
+    public async Task AuthUserAsync(string email, SecureString securePassword)
     {
 
         string password = null;
@@ -85,7 +85,7 @@ public class AuthService
         }
     }
 
-    public async Task LoginUserWithRefreshToken(string refreshToken)
+    public async Task LoginUserWithRefreshTokenAsync(string refreshToken)
     {
         var registerResponse = await _apiWrapper.ExecuteAsync(async () =>
         await _apiClient.RefreshTokenAsync(refreshToken));

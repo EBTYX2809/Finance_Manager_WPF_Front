@@ -86,21 +86,21 @@ public class LoginViewModel : INotifyPropertyChanged
 
         if (existToken == null) return;        
         
-        await _authService.LoginUserWithRefreshToken(existToken);
+        await _authService.LoginUserWithRefreshTokenAsync(existToken);
         _windowChanger.GoToMainWindow();        
     }
 
     private async Task AuthAsync(object parameter)
     {
         if (!ValidateCredentials()) return;
-        await _authService.AuthUser(Email, SecurePassword);
+        await _authService.AuthUserAsync(Email, SecurePassword);
         _windowChanger.GoToMainWindow();
     }
 
     private async Task RegisterAsync(object parameter)
     {
         if(!ValidateCredentials()) return;
-        await _authService.RegisterUser(Email, SecurePassword);
+        await _authService.RegisterUserAsync(Email, SecurePassword);
         _windowChanger.GoToMainWindow();
     }
 

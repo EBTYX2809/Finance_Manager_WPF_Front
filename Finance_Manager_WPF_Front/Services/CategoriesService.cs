@@ -22,7 +22,7 @@ public class CategoriesService
         _mapper = mapper;
     }
 
-    public async Task LoadAllCategories()
+    public async Task LoadAllCategoriesAsync()
     {
         var categoriesDTOs = await _apiWrapper.ExecuteAsync(async () =>
         await _apiClient.GetAllCategoriesAsync());

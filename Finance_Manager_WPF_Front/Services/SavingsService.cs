@@ -24,7 +24,7 @@ public class SavingsService
         _userSession = userSession;
     }
 
-    public async Task GetSavingsPage(int pageSize = 5)
+    public async Task GetSavingsPageAsync(int pageSize = 5)
     {
         int lastId = 1; // Должно быть 0, но тут костыль с GetSavingsAsync в котором previousSavingId это int? и оно 0 приводит к null.
 
