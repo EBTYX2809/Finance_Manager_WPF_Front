@@ -12,8 +12,7 @@ public class TransactionModel : INotifyPropertyChanged
     private CategoryModel? _innerCategory = new();    
     //private string _photo = string.Empty;
 
-    public int Id { get; set; }
-    public UserModel User { get; set; } = new();
+    public int Id { get; set; }    
 
     public DateTime Date { get; set; } = DateTime.Now;
 

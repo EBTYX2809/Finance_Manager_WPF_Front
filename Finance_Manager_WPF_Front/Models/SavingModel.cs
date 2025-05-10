@@ -11,7 +11,6 @@ public class SavingModel : INotifyPropertyChanged
     private decimal? _currentAmount;
 
     public int Id { get; set; }
-    public UserModel User { get; set; } = new();
 
     public string Name
     {
