@@ -22,6 +22,7 @@ public class UserService
         _userSession = userSession;
         _mapper = mapper;
         _apiWrapper = apiWrapper;
+        _apiClient.UpdateUserBalanceAfterBackendResponse += UpdateUserBalanceAsync;
     }
 
     public async Task UpdateUserBalanceAsync()

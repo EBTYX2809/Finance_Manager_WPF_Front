@@ -9,6 +9,7 @@ namespace Finance_Manager_WPF_Front.BackendApi;
 public partial class FinanceApiClient
 {
     private readonly TokensManager _tokensManager;
+    public Func<Task> UpdateUserBalanceAfterBackendResponse;
 
     public FinanceApiClient(string baseUrl, HttpClient httpClient, TokensManager tokensManager)
         : this(baseUrl, httpClient)
@@ -37,9 +38,12 @@ public partial class FinanceApiClient
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    private Task ProcessResponseAsync(HttpClient client, HttpResponseMessage response, CancellationToken cancellationToken)
+    private async Task ProcessResponseAsync(HttpClient client, HttpResponseMessage response, CancellationToken cancellationToken)
     {
-        // Можно логировать или обрабатывать глобальные ошибки
-        return Task.CompletedTask;
+        if(response.RequestMessage.Method.ToString() != "GET" 
+            && !response.RequestMessage.RequestUri.AbsolutePath.Contains("/api/Auth"))
+        {
+            await UpdateUserBalanceAfterBackendResponse.Invoke(); // Subscribed in UserService
+        }
     }
 }
