@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Finance_Manager_WPF_Front.Services;
 
@@ -45,5 +46,36 @@ public class SavingsService
         {
             _userSession.CurrentUser.Savings.Add(saving);
         }
+    }
+
+    public async Task CreateSavingAsync(SavingModel savingModel)
+    {
+        _userSession.CurrentUser.Savings.Add(savingModel);
+
+        var saving = _mapper.Map<SavingDTO>(savingModel);
+        saving.UserId = _userSession.CurrentUser.Id;
+
+        int id = await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.CreateSavingAsync(saving));
+
+        savingModel.Id = id;// Recieved id from data base
+    }
+
+    public async Task UpdateSavingAsync(SavingTopUpDTO savingTopUpDTO)
+    {
+        var oldSaving = _userSession.CurrentUser.Savings.FirstOrDefault(s => s.Id == savingTopUpDTO.SavingId);
+
+        oldSaving.CurrentAmount += savingTopUpDTO.TopUpAmount;
+
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.UpdateSavingAsync(savingTopUpDTO));
+    }
+
+    public async Task DeleteSavingAsync(SavingModel savingModel)
+    {
+        _userSession.CurrentUser.Savings.Remove(savingModel);
+
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.DeleteSavingAsync(savingModel.Id));
     }
 }
