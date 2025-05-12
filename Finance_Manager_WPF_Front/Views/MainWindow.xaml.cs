@@ -37,7 +37,7 @@ public partial class MainWindow : Window
         _settingsViewModel = settingsViewModel;
 
         Loaded += MainWindow_Loaded;
-        //TransactionsPageButton_Click(null, null);
+        TransactionsPageButton_Click(null, null);
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -51,14 +51,14 @@ public partial class MainWindow : Window
         await _userService.UpdateUserBalanceAsync();
         await _categoriesService.LoadAllCategoriesAsync();
         await _transactionsService.GetTransactionsPageAsync();
-        await _savingsService.GetSavingsPageAsync();       
+        await _savingsService.GetSavingsPageAsync();
     }
 
     private void TransactionsPageButton_Click(object sender, RoutedEventArgs e)
     {
         DataContext = _transactionsViewModel;
         HidePages();
-        //TransactionsPage.Visibility = Visibility.Visible;
+        TransactionsPage.Visibility = Visibility.Visible;
     }
 
     private void SavingsPageButton_Click(object sender, RoutedEventArgs e)
@@ -84,9 +84,9 @@ public partial class MainWindow : Window
 
     private void HidePages()
     {
-/*        TransactionsPage.Visibility = Visibility.Collapsed;
-        SavingsPage.Visibility = Visibility.Collapsed;
-        AnalyticsPage.Visibility = Visibility.Collapsed;
-        SettigsPage.Visibility = Visibility.Collapsed;*/
+        /*        TransactionsPage.Visibility = Visibility.Collapsed;
+                SavingsPage.Visibility = Visibility.Collapsed;
+                AnalyticsPage.Visibility = Visibility.Collapsed;
+                SettigsPage.Visibility = Visibility.Collapsed;*/
     }
 }
