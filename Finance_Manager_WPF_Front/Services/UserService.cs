@@ -35,4 +35,11 @@ public class UserService
         _userSession.CurrentUser.SecondaryCurrencyBalance1 = _mapper.Map<UserCurrencyBalanceModel>(balanceDTO.SecondaryBalance1);
         _userSession.CurrentUser.SecondaryCurrencyBalance2 = _mapper.Map<UserCurrencyBalanceModel>(balanceDTO.SecondaryBalance2);
     }
+
+    public async Task AddCurrencyAsync(string currencyRang, string currencyCode)
+    {
+        await _apiWrapper.ExecuteAsync(async () => 
+        await _apiClient.UpdateCurrencyAsync(new UpdateUserCurrencyQueryDTO 
+        { UserId = _userSession.CurrentUser.Id, CurrencyRang = currencyRang, CurrencyCode = currencyCode }));
+    }
 }
