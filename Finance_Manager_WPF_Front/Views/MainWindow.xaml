@@ -4,9 +4,221 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views"
+        xmlns:viewmodels="clr-namespace:Finance_Manager_WPF_Front.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" 
+        Height="600" 
+        Width="1000">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="TransactionItemTemplate.xaml"/>
+                <ResourceDictionary Source="SavingItemTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Sidebar with buttons -->
+        <Border Grid.Column="0" Background="#5c0e82">
+            <StackPanel Margin="10">
+                <TextBlock Text="Finance Manager" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Margin="0,20,0,30" 
+                           HorizontalAlignment="Center"/>            
+                
+                <Button Content="Transactions" 
+                        Height="75" 
+                        Margin="0,10,0,10" 
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Click="TransactionsPageButton_Click">
+                </Button>
+                
+                <Button Content="Savings" 
+                        Height="75" 
+                        Margin="0,10,0,10" 
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Click="SavingsPageButton_Click">
+                </Button>
+                
+                <Button Content="Analytics" 
+                        Height="75" 
+                        Margin="0,10,0,10" 
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Click="AnalyticsPageButton_Click">
+                </Button>
+
+                <Button Content="Settings" 
+                        Height="75" 
+                        Margin="0,10,0,10" 
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Click="SettigsPageButton_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        
+        <!-- Main content area - Transactions Page -->
+        <Grid Grid.Column="1" Background="#2e2e2e" x:Name="TransactionsPage">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Balance Display Section -->
+            <Border Grid.Row="0" Background="#8024ad" Padding="10" Margin="10" CornerRadius="10">
+                <StackPanel>
+                    <!-- Primary Balance -->
+                    <Grid Margin="0,0,0,10">
+
+                        <!-- Text="PrimaryBalance" -->
+                        <TextBlock Text="{Binding UserSession.CurrentUser.PrimaryCurrencyBalance.Balance}"
+                                   Foreground="Black" 
+                                   FontSize="30" 
+                                   FontWeight="Bold" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0"/>
+
+                        <TextBlock Text="{Binding UserSession.CurrentUser.PrimaryCurrencyBalance.Currency}"
+                                   Foreground="Black" 
+                                   FontSize="14" 
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center" 
+                                   Margin="275,0,0,0"/>
+                    </Grid>
+                    
+                    <!-- Secondary Balances -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- Secondary Balance 1 -->
+                        <Border Grid.Column="0" Background="#8024ad" Margin="0,0,5,0" Padding="10" CornerRadius="5">
+                            <Grid>
+
+                                <!-- Text="SecondaryBalance1" -->
+                                <TextBlock Text="{Binding UserSession.CurrentUser.SecondaryCurrencyBalance1.Balance}"
+                                           Foreground="Black" 
+                                           FontSize="20" 
+                                           FontWeight="SemiBold" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="{Binding UserSession.CurrentUser.SecondaryCurrencyBalance1.Currency}"
+                                           Foreground="Black" 
+                                           FontSize="12" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" 
+                                           Margin="200,0,0,0"/>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Secondary Balance 2 -->
+                        <Border Grid.Column="1" Background="#8024ad" Margin="5,0,0,0" Padding="10" CornerRadius="5">
+                            <Grid>
+
+                                <!-- Text="SecondaryBalance2" -->
+                                <TextBlock Text="{Binding UserSession.CurrentUser.SecondaryCurrencyBalance2.Balance}"                                    
+                                           Foreground="Black" 
+                                           FontSize="20" 
+                                           FontWeight="SemiBold" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="{Binding UserSession.CurrentUser.SecondaryCurrencyBalance2.Currency}"
+                                           Foreground="Black" 
+                                           FontSize="12" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="200,0,0,0"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            
+            <!-- Transactions List will go here -->
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Transactions ListView -->
+                <ListView Grid.Row="0" 
+                          ItemsSource="{Binding UserSession.CurrentUser.Transactions}" 
+                          SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                          Background="Transparent" 
+                          BorderThickness="0"
+                          ItemTemplate="{StaticResource TransactionItemTemplate}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          VirtualizingPanel.ScrollUnit="Pixel"
+                          SelectionMode="Single">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0,5"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                              Margin="{TemplateBinding Padding}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#4d2e82"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#3d2e82"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                
+                <!-- Load More Button -->
+                <Button Grid.Row="1"
+                        Content="Load More Transactions"
+                        Command="{Binding GetTransactionsPageCommand}"
+                        Height="40"
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        HorizontalAlignment="Center"
+                        Padding="20,5">
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
