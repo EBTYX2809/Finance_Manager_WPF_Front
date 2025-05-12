@@ -31,7 +31,7 @@ namespace Finance_Manager_WPF_Front
 
             // Logger
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()                
+                .MinimumLevel.Debug()
                 .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
@@ -39,18 +39,20 @@ namespace Finance_Manager_WPF_Front
             {
                 loggingBuilder.ClearProviders();
                 loggingBuilder.AddSerilog();
-            });            
+            });
 
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
+            /*var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();*/
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
             // Helpers
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddSingleton<UserSession>();            
+            services.AddSingleton<UserSession>();
 
             // API
             services.AddSingleton<HttpClient>();
@@ -83,6 +85,6 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
             services.AddSingleton<WindowChanger>();
-        }      
+        }
     }
 }

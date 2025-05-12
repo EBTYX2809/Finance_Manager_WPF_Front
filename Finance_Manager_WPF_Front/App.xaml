@@ -28,6 +28,7 @@
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="#333" />
             <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Century Gothic"/>
             <Setter Property="BorderBrush" Value="#666" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="6" />
@@ -48,8 +49,9 @@
 
 
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#8024ad"/>
+            <Setter Property="Background" Value="#00a9a5"/>
             <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Padding" Value="8,4"/>
@@ -67,12 +69,16 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#a64dff"/>
+                                <Setter Property="Background" Value="#83c5be"/> 
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
         </Style>
         
     </Application.Resources>
