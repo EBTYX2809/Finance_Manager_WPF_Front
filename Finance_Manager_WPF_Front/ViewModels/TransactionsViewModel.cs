@@ -13,7 +13,7 @@ namespace Finance_Manager_WPF_Front.ViewModels;
 
 public class TransactionsViewModel : INotifyPropertyChanged
 {
-    private readonly UserSession _userSession;
+    public UserSession UserSession { get; set; }
     private readonly TransactionsService _transactionsService;
 
     private bool _isTransactionEditorVisible;
@@ -83,7 +83,7 @@ public class TransactionsViewModel : INotifyPropertyChanged
 
     public TransactionsViewModel(UserSession userSession, TransactionsService transactionsService)
     {
-        _userSession = userSession;
+        UserSession = userSession;
         _transactionsService = transactionsService;
 
         IsTransactionEditorVisible = false;
@@ -104,7 +104,11 @@ public class TransactionsViewModel : INotifyPropertyChanged
 
     private async Task OpenTransactionAsync(object parameter)
     {
-        IsTransactionVisible = true;
+        if (parameter is TransactionModel transaction)
+        {
+            SelectedTransaction = transaction;
+            IsTransactionVisible = true;
+        }
     }
 
     private async Task CloseTransactionAsync(object parameter)
