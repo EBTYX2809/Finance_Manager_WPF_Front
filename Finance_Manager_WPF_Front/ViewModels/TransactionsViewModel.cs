@@ -1,7 +1,9 @@
-﻿using Finance_Manager_WPF_Front.Models;
+﻿using Finance_Manager_WPF_Front.BackendApi;
+using Finance_Manager_WPF_Front.Models;
 using Finance_Manager_WPF_Front.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,6 +16,7 @@ namespace Finance_Manager_WPF_Front.ViewModels;
 public class TransactionsViewModel : INotifyPropertyChanged
 {
     public UserSession UserSession { get; set; }
+    public ObservableCollection<CategoryModel> Categories { get; set; } = new ObservableCollection<CategoryModel>();
     private readonly TransactionsService _transactionsService;
 
     private bool _isTransactionEditorVisible;
@@ -30,31 +33,14 @@ public class TransactionsViewModel : INotifyPropertyChanged
         }
     }
 
-    private bool _isTransactionVisible;
-    public bool IsTransactionVisible
+    private bool _isEditMode;
+    public bool IsEditMode
     {
-        get => _isTransactionVisible;
+        get => _isEditMode;
         set
         {
-            if (_isTransactionVisible != value)
-            {
-                _isTransactionVisible = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private TransactionModel _selectedTransaction;
-    public TransactionModel SelectedTransaction
-    {
-        get => _selectedTransaction;
-        set
-        {
-            if (_selectedTransaction != value)
-            {
-                _selectedTransaction = value;
-                OnPropertyChanged();
-            }
+            _isEditMode = value;
+            OnPropertyChanged(nameof(IsEditMode));
         }
     }
 
@@ -72,8 +58,94 @@ public class TransactionsViewModel : INotifyPropertyChanged
         }
     }
 
-    public ICommand OpenTransactionCommand { get; set; }
-    public ICommand CloseTransactionCommand { get; set; }
+    #region Date properties
+
+    // Lists for ComboBoxes
+    public List<int> DaysList { get; } = Enumerable.Range(1, 31).ToList();
+    public List<string> MonthsList { get; } = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+    public List<int> YearsList { get; } = Enumerable.Range(DateTime.Now.Year - 5, 6).ToList(); // Current year and 5 years back
+    public List<int> HoursList { get; } = Enumerable.Range(0, 24).ToList();
+    public List<int> MinutesList { get; } = Enumerable.Range(0, 60).ToList();
+
+    // Selected values
+    private int _selectedDay = DateTime.Now.Day;
+    public int SelectedDay
+    {
+        get => _selectedDay;
+        set
+        {
+            _selectedDay = value;
+            OnPropertyChanged(nameof(SelectedDay));
+            UpdateTransactionDate();
+        }
+    }
+
+    private string _selectedMonth = DateTime.Now.ToString("MMMM");
+    public string SelectedMonth
+    {
+        get => _selectedMonth;
+        set
+        {
+            _selectedMonth = value;
+            OnPropertyChanged(nameof(SelectedMonth));
+            UpdateTransactionDate();
+        }
+    }
+
+    private int _selectedYear = DateTime.Now.Year;
+    public int SelectedYear
+    {
+        get => _selectedYear;
+        set
+        {
+            _selectedYear = value;
+            OnPropertyChanged(nameof(SelectedYear));
+            UpdateTransactionDate();
+        }
+    }
+
+    private int _selectedHour = DateTime.Now.Hour;
+    public int SelectedHour
+    {
+        get => _selectedHour;
+        set
+        {
+            _selectedHour = value;
+            OnPropertyChanged(nameof(SelectedHour));
+            UpdateTransactionDate();
+        }
+    }
+
+    private int _selectedMinute = DateTime.Now.Minute;
+    public int SelectedMinute
+    {
+        get => _selectedMinute;
+        set
+        {
+            _selectedMinute = value;
+            OnPropertyChanged(nameof(SelectedMinute));
+            UpdateTransactionDate();
+        }
+    }
+
+    // Helper method to update the transaction date
+    private void UpdateTransactionDate()
+    {
+        try
+        {
+            int monthIndex = MonthsList.IndexOf(SelectedMonth) + 1;
+            DateTime newDate = new DateTime(SelectedYear, monthIndex, SelectedDay, SelectedHour, SelectedMinute, 0);
+            NewTransaction.Date = newDate;
+        }
+        catch
+        {
+            // Handle invalid date (e.g., February 30)
+            // You could set to a default date or leave as is
+        }
+    }
+
+    #endregion
+
     public ICommand EditTransactionCommand { get; set; }
     public ICommand CloseTransactionEditorCommand { get; set; }
     public ICommand CreateTransactionCommand { get; set; }
@@ -87,41 +159,28 @@ public class TransactionsViewModel : INotifyPropertyChanged
         _transactionsService = transactionsService;
 
         IsTransactionEditorVisible = false;
-        IsTransactionVisible = false;
+        IsEditMode = false;
 
-        SelectedTransaction = new TransactionModel();
         NewTransaction = new TransactionModel();
 
-        OpenTransactionCommand = new AsyncRelayCommand(OpenTransactionAsync);
-        CloseTransactionCommand = new AsyncRelayCommand(CloseTransactionAsync);
         EditTransactionCommand = new AsyncRelayCommand(EditTransactionAsync);
         CloseTransactionEditorCommand = new AsyncRelayCommand(CloseTransactionEditorAsync);
         CreateTransactionCommand = new AsyncRelayCommand(CreateTransactionAsync);
         GetTransactionsPageCommand = new AsyncRelayCommand(GetTransactionsPageAsync);
         UpdateTransactionCommand = new AsyncRelayCommand(UpdateTransactionAsync);
-        DeleteTransactionCommand = new AsyncRelayCommand(DeleteTransactionAsync);        
-    }
-
-    private async Task OpenTransactionAsync(object parameter)
-    {
-        if (parameter is TransactionModel transaction)
-        {
-            SelectedTransaction = transaction;
-            IsTransactionVisible = true;
-        }
-    }
-
-    private async Task CloseTransactionAsync(object parameter)
-    {
-        IsTransactionVisible = false;
-        SelectedTransaction = null;
-    }
+        DeleteTransactionCommand = new AsyncRelayCommand(DeleteTransactionAsync);
+    }   
 
     private async Task EditTransactionAsync(object parameter)
     {
         IsTransactionEditorVisible = true;
-        IsTransactionVisible = false;
-        if(SelectedTransaction != null) NewTransaction = SelectedTransaction;
+
+        if (parameter is TransactionModel transaction)
+        {
+            NewTransaction = transaction;
+            IsEditMode = true;
+        }
+        else IsEditMode = false;
     }
 
     private async Task CloseTransactionEditorAsync(object parameter)
@@ -133,6 +192,7 @@ public class TransactionsViewModel : INotifyPropertyChanged
     private async Task CreateTransactionAsync(object parameter)
     {
         await _transactionsService.CreateTransactionAsync(NewTransaction);
+        CloseTransactionEditorAsync(null);
     }
 
     private async Task GetTransactionsPageAsync(object parameter)
@@ -143,11 +203,19 @@ public class TransactionsViewModel : INotifyPropertyChanged
     private async Task UpdateTransactionAsync(object parameter)
     {
         await _transactionsService.UpdateTransactionAsync(NewTransaction); // типо мы новую создаем, отличающуюся от старой
+        CloseTransactionEditorAsync(null);
     }
 
     private async Task DeleteTransactionAsync(object parameter)
     {
-        await _transactionsService.DeleteTransactionAsync(SelectedTransaction);
+        if (parameter is TransactionModel transaction)
+            await _transactionsService.DeleteTransactionAsync(transaction);
+    }
+
+    public void LoadCategories()
+    {
+        //Categories = CategoriesStorage.AllCategories.Where(c => c.InnerCategories != null) as ObservableCollection<CategoryModel>;
+        foreach(var category in CategoriesStorage.AllCategories) Categories.Add(category);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

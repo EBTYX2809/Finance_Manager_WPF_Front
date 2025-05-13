@@ -8,15 +8,8 @@
             <Border CornerRadius="5" 
                     Margin="0,5,0,5" 
                     BorderThickness="0">
-                <Border.Effect>
-                    <DropShadowEffect Color="#006d77" 
-                                      Direction="320"
-                                      ShadowDepth="3"
-                                      Opacity="0.3"
-                                      BlurRadius="5"/>
-                </Border.Effect>
                 <Border.Background>
-                    <SolidColorBrush Color="{Binding Category.ColorForBackground}" Opacity="0.8"/>
+                    <SolidColorBrush Color="{Binding Category.ColorForBackground}" Opacity="0.8"/> <!-- 0.6 -->
                 </Border.Background>
             </Border>
             
@@ -86,13 +79,23 @@
                     </Border>
                     
                     <Border Grid.Column="2" Padding="10,5">
-                        <Button Content="Open" 
+                        <Button Content="Edit" 
                                 Background="Transparent"
                                 Padding="10,3" 
-                                FontSize="16"
-                                
+                                FontSize="16"                                
+                                HorizontalAlignment="Left" 
+                                Command="{Binding DataContext.EditTransactionCommand, 
+                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                CommandParameter="{Binding}"/>
+                    </Border>
+
+                    <Border Grid.Column="2" Padding="10,5">
+                        <Button Content="Delete" 
+                                Background="Transparent"
+                                Padding="10,3" 
+                                FontSize="16"                                
                                 HorizontalAlignment="Right" 
-                                Command="{Binding DataContext.OpenTransactionCommand, 
+                                Command="{Binding DataContext.DeleteTransactionCommand, 
                                           RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
                                 CommandParameter="{Binding}"/>
                     </Border>

@@ -43,7 +43,8 @@ public partial class MainWindow : Window
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         await LoadStartupUserData();
-        MessageBox.Show($"I'm here: {_userSession.CurrentUser?.Email}.");
+        _transactionsViewModel.LoadCategories();
+        //MessageBox.Show($"I'm here: {_userSession.CurrentUser?.Email}.");
     }
 
     private async Task LoadStartupUserData()
