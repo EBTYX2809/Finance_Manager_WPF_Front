@@ -65,7 +65,7 @@ public class SavingsService
     {
         var oldSaving = _userSession.CurrentUser.Savings.FirstOrDefault(s => s.Id == savingTopUpDTO.SavingId);
 
-        oldSaving.CurrentAmount += savingTopUpDTO.TopUpAmount;
+        oldSaving.CurrentAmount += (decimal?)savingTopUpDTO.TopUpAmount;
 
         await _apiWrapper.ExecuteAsync(async () =>
         await _apiClient.UpdateSavingAsync(savingTopUpDTO));
