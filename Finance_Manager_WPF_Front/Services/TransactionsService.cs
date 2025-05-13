@@ -50,7 +50,7 @@ public class TransactionsService
 
     public async Task CreateTransactionAsync(TransactionModel transactionModel)
     {
-        _userSession.CurrentUser.Transactions.Add(transactionModel);
+        _userSession.CurrentUser.Transactions.Insert(0, transactionModel);
 
         var transaction = _mapper.Map<TransactionDTO>(transactionModel);
         transaction.UserId = _userSession.CurrentUser.Id;

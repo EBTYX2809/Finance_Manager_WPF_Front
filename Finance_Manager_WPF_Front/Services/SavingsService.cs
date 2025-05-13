@@ -50,7 +50,7 @@ public class SavingsService
 
     public async Task CreateSavingAsync(SavingModel savingModel)
     {
-        _userSession.CurrentUser.Savings.Add(savingModel);
+        _userSession.CurrentUser.Savings.Insert(0, savingModel);
 
         var saving = _mapper.Map<SavingDTO>(savingModel);
         saving.UserId = _userSession.CurrentUser.Id;
