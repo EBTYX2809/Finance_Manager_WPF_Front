@@ -37,14 +37,15 @@ public partial class MainWindow : Window
         _settingsViewModel = settingsViewModel;
 
         Loaded += MainWindow_Loaded;
-        TransactionsPageButton_Click(null, null);
+        //TransactionsPageButton_Click(null, null);
+        SavingsPageButton_Click(null, null);
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         await LoadStartupUserData();
         _transactionsViewModel.LoadCategories();
-        //MessageBox.Show($"I'm here: {_userSession.CurrentUser?.Email}.");
+        _savingsViewModel.UpdateSumSavings();
     }
 
     private async Task LoadStartupUserData()
@@ -66,7 +67,7 @@ public partial class MainWindow : Window
     {
         DataContext = _savingsViewModel;
         HidePages();
-        //SavingsPage.Visibility = Visibility.Visible;
+        SavingsPage.Visibility = Visibility.Visible;
     }
 
     private void AnalyticsPageButton_Click(object sender, RoutedEventArgs e)
@@ -85,9 +86,9 @@ public partial class MainWindow : Window
 
     private void HidePages()
     {
-        /*        TransactionsPage.Visibility = Visibility.Collapsed;
-                SavingsPage.Visibility = Visibility.Collapsed;
-                AnalyticsPage.Visibility = Visibility.Collapsed;
-                SettigsPage.Visibility = Visibility.Collapsed;*/
+        TransactionsPage.Visibility = Visibility.Collapsed;
+        SavingsPage.Visibility = Visibility.Collapsed;
+        //AnalyticsPage.Visibility = Visibility.Collapsed;
+        //SettigsPage.Visibility = Visibility.Collapsed;
     }
 }

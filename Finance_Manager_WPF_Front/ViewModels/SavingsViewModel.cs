@@ -8,7 +8,7 @@ namespace Finance_Manager_WPF_Front.ViewModels;
 
 public class SavingsViewModel : INotifyPropertyChanged
 {
-    private readonly UserSession _userSession;
+    public UserSession _userSession { get; set; }
     private readonly SavingsService _savingsService;
 
     private bool _isTopUpEditorVisible;
@@ -37,35 +37,7 @@ public class SavingsViewModel : INotifyPropertyChanged
                 OnPropertyChanged();
             }
         }
-    }
-
-    private bool _isSavingVisible;
-    public bool IsSavingVisible
-    {
-        get => _isSavingVisible;
-        set
-        {
-            if (_isSavingVisible != value)
-            {
-                _isSavingVisible = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private SavingModel _selectedSaving;
-    public SavingModel SelectedSaving
-    {
-        get => _selectedSaving;
-        set
-        {
-            if (_selectedSaving != value)
-            {
-                _selectedSaving = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+    }   
 
     private SavingModel _newSaving;
     public SavingModel NewSaving
@@ -95,8 +67,20 @@ public class SavingsViewModel : INotifyPropertyChanged
         }
     }
 
-    public ICommand OpenSavingCommand { get; set; }
-    public ICommand CloseSavingCommand { get; set; }
+    private decimal? _sumSavings;
+    public decimal? SumSavings
+    {
+        get => _sumSavings;
+        set
+        {
+            if (_sumSavings != value)
+            {
+                _sumSavings = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public ICommand OpenSavingEditorCommand { get; set; }
     public ICommand CloseSavingEditorCommand { get; set; }
     public ICommand OpenTopUpEditorCommand { get; set; }
@@ -112,13 +96,9 @@ public class SavingsViewModel : INotifyPropertyChanged
         _savingsService = savingsService;
 
         IsTopUpEditorVisible = false;
-        IsSavingVisible = false;
 
-        SelectedSaving = new SavingModel();
         NewSaving = new SavingModel();
 
-        OpenSavingCommand = new AsyncRelayCommand(OpenSavingAsync);
-        CloseSavingCommand = new AsyncRelayCommand(CloseSavingAsync);
         OpenSavingEditorCommand = new AsyncRelayCommand(OpenSavingEditorAsync);
         CloseSavingEditorCommand = new AsyncRelayCommand(CloseSavingEditorAsync);
         OpenTopUpEditorCommand = new AsyncRelayCommand(OpenTopUpEditorAsync);
@@ -129,61 +109,63 @@ public class SavingsViewModel : INotifyPropertyChanged
         DeleteSavingCommand = new AsyncRelayCommand(DeleteSavingAsync);        
     }
 
-    private async Task OpenSavingAsync(object parameter)
-    {
-        IsSavingVisible = true;
-    }
-
-    private async Task CloseSavingAsync(object parameter)
-    {
-        IsSavingVisible = false;
-        SelectedSaving = null;
-    }
-
     private async Task OpenSavingEditorAsync(object parameter)
     {
-        IsSavingEditorVisible = true;
-        IsSavingVisible = false;
+        IsSavingEditorVisible = true;        
     }
 
     private async Task CloseSavingEditorAsync(object parameter)
     {
         IsSavingEditorVisible = false; 
-        IsSavingVisible = true;
         NewSaving = null;
     }
 
     private async Task OpenTopUpEditorAsync(object parameter)
     {
-        IsTopUpEditorVisible = true;
-        IsSavingVisible = false;
+        IsTopUpEditorVisible = true;   
+        if(parameter is SavingModel savingModel)
+        {
+            NewSaving = savingModel;
+        }
     }
 
     private async Task CloseTopUpEditorAsync(object parameter)
     {
         IsTopUpEditorVisible = false;
-        IsSavingVisible = true;
+        NewSaving = null;
         TopUp = 0;
     }
 
     private async Task CreateSavingAsync(object parameter)
     {
         await _savingsService.CreateSavingAsync(NewSaving);
+        UpdateSumSavings();
+        CloseSavingEditorAsync(null);
     }
 
     private async Task GetSavingsPageAsync(object parameter)
     {
         await _savingsService.GetSavingsPageAsync();
+        UpdateSumSavings();
     }
 
     private async Task UpdateSavingAsync(object parameter)
     {
-        await _savingsService.UpdateSavingAsync(new BackendApi.SavingTopUpDTO { SavingId = SelectedSaving.Id, TopUpAmount = TopUp });
+        await _savingsService.UpdateSavingAsync(new BackendApi.SavingTopUpDTO { SavingId = NewSaving.Id, TopUpAmount = TopUp });
+        UpdateSumSavings();
+        CloseTopUpEditorAsync(null);
     }
 
     private async Task DeleteSavingAsync(object parameter)
     {
-        await _savingsService.DeleteSavingAsync(SelectedSaving);
+        if (parameter is SavingModel savingModel)
+            await _savingsService.DeleteSavingAsync(savingModel);
+        UpdateSumSavings();
+    }
+
+    public void UpdateSumSavings()
+    {
+        SumSavings = _userSession.CurrentUser.Savings.Sum(s => s.CurrentAmount);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

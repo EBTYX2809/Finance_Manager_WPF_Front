@@ -77,28 +77,30 @@
                                    
                                    VerticalAlignment="Center"/>
                     </Border>
-                    
-                    <Border Grid.Column="2" Padding="10,5">
-                        <Button Content="Edit" 
-                                Background="Transparent"
-                                Padding="10,3" 
-                                FontSize="16"                                
-                                HorizontalAlignment="Left" 
-                                Command="{Binding DataContext.EditTransactionCommand, 
-                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
-                                CommandParameter="{Binding}"/>
-                    </Border>
 
-                    <Border Grid.Column="2" Padding="10,5">
-                        <Button Content="Delete" 
-                                Background="Transparent"
-                                Padding="10,3" 
-                                FontSize="16"                                
-                                HorizontalAlignment="Right" 
-                                Command="{Binding DataContext.DeleteTransactionCommand, 
-                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
-                                CommandParameter="{Binding}"/>
-                    </Border>
+                    <Button Grid.Column="2"
+                            Content=" Edit " 
+                            Background="#092327"
+                            Foreground="White"
+                            Margin="10,0,0,5"
+                            FontSize="16"    
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" 
+                            Command="{Binding DataContext.EditTransactionCommand, 
+                                      RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                            CommandParameter="{Binding}"/>
+
+                    <Button Grid.Column="2"
+                            Content=" Delete " 
+                            Background="#092327"
+                            Foreground="White"
+                            Margin="0, 0, 5, 5"
+                            FontSize="16"    
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right" 
+                            Command="{Binding DataContext.DeleteTransactionCommand, 
+                                      RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                            CommandParameter="{Binding}"/>
                 </Grid>
             </Grid>
         </Grid>
