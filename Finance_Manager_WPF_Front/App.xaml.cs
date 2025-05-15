@@ -72,13 +72,14 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<CategoriesService>();
             services.AddSingleton<TransactionsService>();
             services.AddSingleton<SavingsService>();
+            services.AddSingleton<AnalyticsService>();
 
             // ViewModels
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<TransactionsViewModel>();
             services.AddSingleton<AnalyticsViewModel>();
             services.AddSingleton<SavingsViewModel>();
-            services.AddSingleton<PlanningViewModel>();
+            //services.AddSingleton<PlanningViewModel>();
             services.AddSingleton<SettingsViewModel>();
 
             // Views

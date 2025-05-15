@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        
         xmlns:viewmodels="clr-namespace:Finance_Manager_WPF_Front.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" 
@@ -468,8 +470,8 @@
                     <!-- Total Savings -->
                     <Grid Margin="0,10,0,10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0"
@@ -744,5 +746,85 @@
             </Grid>
         </Grid>
 
+        <!-- Main content area - Analytics Page -->
+        <Grid Grid.Column="1" Background="#092327" x:Name="AnalyticsPage" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <lvc:PieChart 
+                Series="{Binding AnalyticsData}" 
+                LegendPosition="Hidden" 
+                Grid.Column="0"
+                Margin="30"/>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Get spends analytics for:"
+                           Foreground="White"                           
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"/>
+
+                <Button Grid.Row="1"
+                        Margin="20"
+                        Command="{Binding GetAnalyticsForWeekCommand}">
+                    <TextBlock Text="Last week."
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontSize="20"/>
+                </Button>
+
+                <Button Grid.Row="2"
+                        Margin="20"
+                        Command="{Binding GetAnalyticsForMonthCommand}">
+                    <TextBlock Text="Last month."
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontSize="20"/>
+                </Button>
+
+                <Button Grid.Row="3"
+                        Margin="20"
+                        Command="{Binding GetAnalyticsFor3MonthCommand}">
+                <TextBlock Text="Last 3 month."
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           FontSize="20"/>
+                </Button>
+
+                <Button Grid.Row="4"
+                        Margin="20"
+                        Command="{Binding GetAnalyticsForHalfYearCommand}">
+                    <TextBlock Text="Last half year."
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontSize="20"/>
+                </Button>
+
+                <Button Grid.Row="5"
+                        Margin="20"
+                        Command="{Binding GetAnalyticsForYearCommand}">
+                    <TextBlock Text="Last year"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontSize="20"/>
+                </Button>
+
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
