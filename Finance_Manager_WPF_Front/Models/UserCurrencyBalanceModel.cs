@@ -30,9 +30,10 @@ public class UserCurrencyBalanceModel : INotifyPropertyChanged
         get => _balance;
         set
         {
-            if (_balance != value)
+            decimal truncated = Math.Floor(value * 100) / 100;
+            if (_balance != truncated)
             {
-                _balance = value;
+                _balance = truncated;
                 OnPropertyChanged();
             }
         }
