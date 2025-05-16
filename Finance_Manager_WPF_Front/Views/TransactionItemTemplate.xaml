@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views">
+
+    <local:CurrencyConverter x:Key="CurrencyConverter"/>
+
     <DataTemplate x:Key="TransactionItemTemplate">
         <!-- Use a Grid as the root element to allow overlapping elements -->
         <Grid>
@@ -45,7 +48,7 @@
                     </Border>
                     
                     <Border Grid.Column="2" Padding="10,5">
-                        <TextBlock Text="{Binding Price, StringFormat=\{0:C\}}" 
+                        <TextBlock Text="{Binding Price, Converter={StaticResource CurrencyConverter}}" 
                                    Foreground="Black" 
                                    FontSize="16"
                                    FontWeight="SemiBold" 

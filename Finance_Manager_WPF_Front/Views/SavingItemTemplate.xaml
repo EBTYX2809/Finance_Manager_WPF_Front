@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views">
+
+    <local:CurrencyConverter x:Key="CurrencyConverter"/>
+
     <DataTemplate x:Key="SavingItemTemplate">
         <!-- Main Container -->
         <Border CornerRadius="5" 
@@ -33,7 +36,7 @@
                     
                     <!-- Goal -->
                     <TextBlock Grid.Column="1" 
-                               Text="{Binding Goal, StringFormat=Goal: {0:C}}" 
+                               Text="{Binding Goal, Converter={StaticResource CurrencyConverter}}" 
                                Foreground="White" 
                                FontSize="16" 
                                VerticalAlignment="Center"
@@ -67,7 +70,7 @@
                     
                     <!-- Current Amount -->
                     <TextBlock Grid.Column="0" 
-                               Text="{Binding CurrentAmount, StringFormat=CurrentAmount: {0:C}}" 
+                               Text="{Binding CurrentAmount, Converter={StaticResource CurrencyConverter}}" 
                                Foreground="White" 
                                FontSize="16" 
                                VerticalAlignment="Center"
