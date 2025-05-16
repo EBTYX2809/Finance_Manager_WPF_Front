@@ -1,0 +1,44 @@
+﻿<Window x:Class="Finance_Manager_WPF_Front.Views.PrimaryCurrencyPickWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Finance_Manager_WPF_Front.Views"
+        mc:Ignorable="d"
+        Title="PrimaryCurrencyPickWindow" 
+        Height="200" 
+        Width="600"
+        Background="#2e2e2e"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Pick primary currency for you account:"
+                   Foreground="White"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,10"/>
+
+        <ComboBox Grid.Row="1"
+                  ItemsSource="{Binding CurrencyCodes}" 
+                  SelectedItem="{Binding SelectedCurrencyCode}"                           
+                  FontSize="16" 
+                  Padding="5" 
+                  Margin="50,0,50,0"
+                  VerticalAlignment="Center"/>
+
+        <Button Grid.Row="2"
+                Content="Accept"
+                Command="{Binding AcceptCommand}"                        
+                Margin="100,10,100,10"
+                FontSize="20"/>
+    </Grid>
+</Window>

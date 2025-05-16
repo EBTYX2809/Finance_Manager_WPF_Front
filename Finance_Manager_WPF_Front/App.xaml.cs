@@ -41,6 +41,8 @@ namespace Finance_Manager_WPF_Front
                 loggingBuilder.AddSerilog();
             });
 
+            CurrencyCultureProvider.Initialize(ServiceProvider.GetRequiredService<UserSession>());
+
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
@@ -81,10 +83,12 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<SavingsViewModel>();
             //services.AddSingleton<PlanningViewModel>();
             services.AddSingleton<SettingsViewModel>();
+            services.AddSingleton<PrimaryCurrencyPickViewModel>();
 
             // Views
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<PrimaryCurrencyPickWindow>();
             services.AddSingleton<WindowChanger>();
         }
     }

@@ -29,6 +29,15 @@ public class WindowChanger
         currentWindow?.Close();
     }
 
+    public void GoToPrimaryCurrencyPickWindow()
+    {
+        Window currentWindow = Application.Current.MainWindow;
+        var _primaryCurrencyPickWindow = _provider.GetRequiredService<PrimaryCurrencyPickWindow>();
+        Application.Current.MainWindow = _primaryCurrencyPickWindow;
+        _primaryCurrencyPickWindow.Show();
+        currentWindow?.Close();
+    }
+
     public void GoToLoginWindow() 
     {
         var currentWindow = Application.Current.MainWindow;

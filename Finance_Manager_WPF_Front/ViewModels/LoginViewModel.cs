@@ -101,7 +101,7 @@ public class LoginViewModel : INotifyPropertyChanged
     {
         if(!ValidateCredentials()) return;
         await _authService.RegisterUserAsync(Email, SecurePassword);
-        _windowChanger.GoToMainWindow();
+        _windowChanger.GoToPrimaryCurrencyPickWindow();
     }
 
     private bool ValidateCredentials()

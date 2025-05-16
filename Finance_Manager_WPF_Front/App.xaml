@@ -80,6 +80,6 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Century Gothic"/>
         </Style>
-        
+
     </Application.Resources>
 </Application>
