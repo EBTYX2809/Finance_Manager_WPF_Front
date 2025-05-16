@@ -39,7 +39,8 @@ public partial class MainWindow : Window
         Loaded += MainWindow_Loaded;
         //TransactionsPageButton_Click(null, null);
         //SavingsPageButton_Click(null, null);
-        AnalyticsPageButton_Click(null, null);
+        //AnalyticsPageButton_Click(null, null);
+        SettigsPageButton_Click(null, null);
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -83,7 +84,7 @@ public partial class MainWindow : Window
     {
         DataContext = _settingsViewModel;
         HidePages();
-        //SettigsPage.Visibility = Visibility.Visible;
+        SettingsPage.Visibility = Visibility.Visible;
     }
 
     private void HidePages()
@@ -91,6 +92,6 @@ public partial class MainWindow : Window
         TransactionsPage.Visibility = Visibility.Collapsed;
         SavingsPage.Visibility = Visibility.Collapsed;
         AnalyticsPage.Visibility = Visibility.Collapsed;
-        //SettigsPage.Visibility = Visibility.Collapsed;
+        SettingsPage.Visibility = Visibility.Collapsed;
     }
 }

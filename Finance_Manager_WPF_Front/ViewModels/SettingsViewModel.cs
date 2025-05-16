@@ -1,5 +1,6 @@
 ﻿using Finance_Manager_WPF_Front.Models;
 using Finance_Manager_WPF_Front.Services;
+using Finance_Manager_WPF_Front.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -8,7 +9,7 @@ namespace Finance_Manager_WPF_Front.ViewModels;
 
 public class SettingsViewModel : INotifyPropertyChanged
 {
-    private readonly UserSession _userSession;
+    public UserSession _userSession { get; set; }
     private readonly UserService _userService;
 
     private string _newCurrencyRang;
@@ -37,25 +38,17 @@ public class SettingsViewModel : INotifyPropertyChanged
                 OnPropertyChanged();
             }
         }
-    }
+    }   
 
-    private bool _isCurrencyEditorVisible;
-    public bool IsCurrencyEditorVisible
+    public List<string> CurrencyRangs { get; set; } = new List<string>
     {
-        get => _isCurrencyEditorVisible;
-        set
-        {
-            if (_isCurrencyEditorVisible != value) 
-            {
-                _isCurrencyEditorVisible = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+        "Secondary1",
+        "Secondary2"
+    };
+
+    public List<string> CurrencyCodes { get; set; }
 
     public ICommand LogoutCommand { get; set; }
-    public ICommand OpenCurrencyEditorCommand { get; set; }
-    public ICommand CloseCurrencyEditorCommand { get; set; }
     public ICommand AddCurrencyCommand { get; set; }
 
     public SettingsViewModel(UserSession userSession, UserService userService)
@@ -63,25 +56,10 @@ public class SettingsViewModel : INotifyPropertyChanged
         _userSession = userSession;
         _userService = userService;
 
-        IsCurrencyEditorVisible = false;
+        CurrencyCodes = CurrencyCultureProvider.GetCurrenciesList();
 
         LogoutCommand = new AsyncRelayCommand(LogoutAsync);
         AddCurrencyCommand = new AsyncRelayCommand(AddCurrencyAsync);
-        OpenCurrencyEditorCommand = new AsyncRelayCommand(OpenCurrencyEditorAsync);
-        CloseCurrencyEditorCommand = new AsyncRelayCommand(CloseCurrencyEditorAsync);
-    }
-
-
-    private async Task OpenCurrencyEditorAsync(object parameter)
-    {
-        IsCurrencyEditorVisible = true;
-    }
-
-    private async Task CloseCurrencyEditorAsync(object parameter)
-    {
-        IsCurrencyEditorVisible = false;
-        NewCurrencyCode = null;
-        NewCurrencyRang = null;
     }
 
     private async Task LogoutAsync(object parameter)
@@ -92,6 +70,8 @@ public class SettingsViewModel : INotifyPropertyChanged
     private async Task AddCurrencyAsync(object parameter)
     {
         await _userService.AddCurrencyAsync(NewCurrencyRang, NewCurrencyCode);
+        NewCurrencyCode = null;
+        NewCurrencyRang = null;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

@@ -38,8 +38,21 @@ public class UserService
 
     public async Task AddCurrencyAsync(string currencyRang, string currencyCode)
     {
-        await _apiWrapper.ExecuteAsync(async () => 
-        await _apiClient.UpdateCurrencyAsync(new UpdateUserCurrencyQueryDTO 
+        if (currencyRang == "Primary")
+        {
+            _userSession.CurrentUser.PrimaryCurrencyBalance.Currency = currencyCode;
+        }
+        else if (currencyRang == "Secondary1")
+        {
+            _userSession.CurrentUser.SecondaryCurrencyBalance1 = new UserCurrencyBalanceModel { Currency = currencyCode, Balance = 0 };
+        }
+        else if (currencyRang == "Secondary2")
+        {
+            _userSession.CurrentUser.SecondaryCurrencyBalance1 = new UserCurrencyBalanceModel { Currency = currencyCode, Balance = 0 };
+        }
+
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.UpdateCurrencyAsync(new UpdateUserCurrencyQueryDTO
         { UserId = _userSession.CurrentUser.Id, CurrencyRang = currencyRang, CurrencyCode = currencyCode }));
     }
 }

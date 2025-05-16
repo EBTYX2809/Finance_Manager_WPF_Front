@@ -21,6 +21,7 @@
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
+
     </Window.Resources>
 
     <!-- Main Grid -->
@@ -747,7 +748,7 @@
         </Grid>
 
         <!-- Main content area - Analytics Page -->
-        <Grid Grid.Column="1" Background="#092327" x:Name="AnalyticsPage" Visibility="Visible">
+        <Grid Grid.Column="1" Background="#092327" x:Name="AnalyticsPage" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="3*"/>
@@ -826,5 +827,103 @@
 
             </Grid>
         </Grid>
+
+        <!-- Main content area - Settings Page -->
+        <Grid Grid.Column="1" Background="#092327" x:Name="SettingsPage" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Account: "
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Margin="20,0,0,0"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding _userSession.CurrentUser.Email}"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Margin="20,0,0,0"/>
+
+                <Button Grid.Column="2"
+                        Content="Logout"
+                        Command="{Binding LogoutCommand}"                        
+                        Margin="50"
+                        FontSize="20"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Change currencies: "
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Margin="20,0,0,0"/>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+                    <TextBlock Text="Currency Rang:"
+                               Foreground="White"
+                               FontSize="20"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10"/>
+
+                    <ComboBox ItemsSource="{Binding CurrencyRangs}" 
+                              SelectedItem="{Binding NewCurrencyRang}"                           
+                              FontSize="16" 
+                              Padding="5" 
+                              Margin="0,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+
+                    <TextBlock Text="Currency Code:"
+                               Foreground="White"
+                               FontSize="20"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10"/>
+
+                    <ComboBox ItemsSource="{Binding CurrencyCodes}" 
+                               SelectedItem="{Binding NewCurrencyCode}"                           
+                               FontSize="16" 
+                               Padding="5" 
+                               Margin="30,0,30,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Button Grid.Column="3"
+                        Content="Add"
+                        Command="{Binding AddCurrencyCommand}"                        
+                        Margin="50"
+                        FontSize="20"/>
+                
+            </Grid>
+
+        </Grid>
+    
     </Grid>
 </Window>
