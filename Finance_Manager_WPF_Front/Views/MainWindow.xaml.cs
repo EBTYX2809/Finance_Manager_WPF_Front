@@ -36,11 +36,11 @@ public partial class MainWindow : Window
         _analyticsViewModel = analyticsViewModel;
         _settingsViewModel = settingsViewModel;
 
-        Loaded += MainWindow_Loaded;
-        //TransactionsPageButton_Click(null, null);
+        Loaded += MainWindow_Loaded;        
+        TransactionsPageButton_Click(null, null);
         //SavingsPageButton_Click(null, null);
         //AnalyticsPageButton_Click(null, null);
-        SettigsPageButton_Click(null, null);
+        //SettigsPageButton_Click(null, null);
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
