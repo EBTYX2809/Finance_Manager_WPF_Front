@@ -86,10 +86,10 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<PrimaryCurrencyPickViewModel>();
 
             // Views
-            services.AddSingleton<LoginWindow>();
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<PrimaryCurrencyPickWindow>();
-            services.AddSingleton<WindowChanger>();
+            services.AddTransient<LoginWindow>();
+            services.AddTransient<MainWindow>();
+            services.AddTransient<PrimaryCurrencyPickWindow>();
+            services.AddTransient<WindowChanger>();
         }
     }
 }
