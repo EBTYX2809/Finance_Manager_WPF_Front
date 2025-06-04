@@ -50,8 +50,6 @@ public class SavingsService
 
     public async Task CreateSavingAsync(SavingModel savingModel)
     {
-        _userSession.CurrentUser.Savings.Insert(0, savingModel);
-
         var saving = _mapper.Map<SavingDTO>(savingModel);
         saving.UserId = _userSession.CurrentUser.Id;
 
@@ -59,23 +57,25 @@ public class SavingsService
         await _apiClient.CreateSavingAsync(saving));
 
         savingModel.Id = id;// Recieved id from data base
+
+        _userSession.CurrentUser.Savings.Insert(0, savingModel);
     }
 
     public async Task UpdateSavingAsync(SavingTopUpDTO savingTopUpDTO)
     {
+        await _apiWrapper.ExecuteAsync(async () =>
+        await _apiClient.UpdateSavingAsync(savingTopUpDTO));
+
         var oldSaving = _userSession.CurrentUser.Savings.FirstOrDefault(s => s.Id == savingTopUpDTO.SavingId);
 
         oldSaving.CurrentAmount += (decimal?)savingTopUpDTO.TopUpAmount;
-
-        await _apiWrapper.ExecuteAsync(async () =>
-        await _apiClient.UpdateSavingAsync(savingTopUpDTO));
     }
 
     public async Task DeleteSavingAsync(SavingModel savingModel)
     {
-        _userSession.CurrentUser.Savings.Remove(savingModel);
-
         await _apiWrapper.ExecuteAsync(async () =>
         await _apiClient.DeleteSavingAsync(savingModel.Id));
+
+        _userSession.CurrentUser.Savings.Remove(savingModel);
     }
 }
