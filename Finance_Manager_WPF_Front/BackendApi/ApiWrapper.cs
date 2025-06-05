@@ -10,7 +10,7 @@ namespace Finance_Manager_WPF_Front.BackendApi;
 
 public class ApiWrapper
 {
-    private readonly UserSession _userSession;    
+    private readonly UserSession _userSession;
     public ApiWrapper(UserSession userSession)
     {
         _userSession = userSession;
@@ -22,7 +22,7 @@ public class ApiWrapper
         {
             return await apiCall();
         }
-        catch (ApiException ex)
+        catch (ApiException<ErrorResponse> ex)
         {
             HandleApiException(ex);
             throw;
@@ -40,7 +40,7 @@ public class ApiWrapper
         {
             await apiCall();
         }
-        catch (ApiException ex)
+        catch (ApiException<ErrorResponse> ex)
         {
             HandleApiException(ex);
             throw;
@@ -52,32 +52,23 @@ public class ApiWrapper
         }
     }
 
-    private void HandleApiException(ApiException ex)
+    private void HandleApiException(ApiException<ErrorResponse> ex)
     {
-        switch (ex.StatusCode)
+        switch (ex.Result.StatusCode)
         {
-            case 400:
-                MessageBox.Show("Validation failed.");
-                break;
             case 401:
                 MessageBox.Show("Authorization failed.");
                 _userSession.Logout();
-                break;
-            case 403:
-                MessageBox.Show("No access.");
-                break;
-            case 404:
-                MessageBox.Show("Not found some resources.");
                 break;
             case 500:
                 MessageBox.Show("Server error.");
                 break;
             default:
-                MessageBox.Show($"API error: {ex.StatusCode}");
+                MessageBox.Show(ex.Result.Message);
                 break;
         }
 
-        Serilog.Log.Error(ex, "Error in API.");
+        Serilog.Log.Error(ex.Result.Message, "Error in API.");
     }
 
     private void HandleUnexpectedException(Exception ex)
