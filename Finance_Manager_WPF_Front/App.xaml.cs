@@ -12,8 +12,6 @@ using Finance_Manager_WPF_Front.Services.AuthServices;
 using Serilog;
 using Microsoft.Extensions.Logging;
 using NetSparkleUpdater;
-using NetSparkleUpdater.AppCastReaders;
-using NetSparkleUpdater.Interfaces;
 using NetSparkleUpdater.UI.WPF;
 using NetSparkleUpdater.SignatureVerifiers;
 
@@ -70,9 +68,9 @@ namespace Finance_Manager_WPF_Front
         {
             // Config
             Config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
 
             // Helpers
             services.AddAutoMapper(typeof(AutoMapperProfile));
