@@ -11,6 +11,11 @@ using Finance_Manager_WPF_Front.Models;
 using Finance_Manager_WPF_Front.Services.AuthServices;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using NetSparkleUpdater;
+using NetSparkleUpdater.AppCastReaders;
+using NetSparkleUpdater.Interfaces;
+using NetSparkleUpdater.UI.WPF;
+using NetSparkleUpdater.SignatureVerifiers;
 
 namespace Finance_Manager_WPF_Front
 {
@@ -21,7 +26,7 @@ namespace Finance_Manager_WPF_Front
     {
         public static IServiceProvider ServiceProvider { get; private set; }
         public static IConfiguration Config { get; private set; }
-
+        private SparkleUpdater _updater;
         protected override void OnStartup(StartupEventArgs e)
         {
             // Services
@@ -43,6 +48,17 @@ namespace Finance_Manager_WPF_Front
 
             CurrencyCultureProvider.Initialize(ServiceProvider.GetRequiredService<UserSession>());
 
+            // NetSparkle auto updater
+            _updater = new SparkleUpdater(
+                Config["AppcastUrl"],
+                new Ed25519Checker(NetSparkleUpdater.Enums.SecurityMode.Strict,
+                    publicKey: Config["SparklePublicKey"]))
+            {
+                UIFactory = new UIFactory(),
+                RelaunchAfterUpdate = true
+            };
+            _updater.StartLoop(true);
+
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
@@ -52,6 +68,12 @@ namespace Finance_Manager_WPF_Front
 
         private void ConfigureServices(IServiceCollection services)
         {
+            // Config
+            Config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+
             // Helpers
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddSingleton<UserSession>();
@@ -61,7 +83,7 @@ namespace Finance_Manager_WPF_Front
             services.AddSingleton<ApiWrapper>();
             services.AddSingleton<FinanceApiClient>(sp =>
             {
-                var baseUrl = "https://localhost:49464";
+                var baseUrl = Config["BackendUri"];
                 var httpClient = sp.GetRequiredService<HttpClient>();
                 var tokenManager = sp.GetRequiredService<TokensManager>();
                 return new FinanceApiClient(baseUrl, httpClient, tokenManager);
