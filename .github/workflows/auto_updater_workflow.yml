@@ -48,6 +48,7 @@ jobs:
           mkdir C:\temp\out
 
       - name: Run appcast-generator container
+        shell: powershell
         run: |
           docker run --rm `
             -v C:\temp\env-keys\keys:C:\keys `
