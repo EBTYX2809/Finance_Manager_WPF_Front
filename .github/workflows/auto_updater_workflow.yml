@@ -10,7 +10,7 @@ jobs:
     runs-on: [self-hosted, updater]
     steps:
       - name: Upload .env and keys as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: env-and-keys
           path: |
@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download env and keys artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: env-keys
           path: C:\temp\env-keys
@@ -48,13 +48,13 @@ jobs:
             appcast-generator-win
 
       - name: Upload out folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: out-folder
           path: C:\temp\out
 
       - name: Upload publish folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: publish-folder
           path: C:\temp\publish
@@ -64,13 +64,13 @@ jobs:
     runs-on: [self-hosted, updater]
     steps:
       - name: Download out
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: out-folder
           path: /home/plotnoplodviktor/finman_wpf/updates/out
 
       - name: Download publish
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: publish-folder
           path: /home/plotnoplodviktor/finman_wpf/updates/publish
