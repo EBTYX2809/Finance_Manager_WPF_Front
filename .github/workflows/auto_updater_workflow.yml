@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Download env and keys artifact
         uses: actions/download-artifact@v4
@@ -39,6 +41,11 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t appcast-generator-win ./Finance_Manager_WPF_Front
+
+      - name: Create publish and out folders
+        run: |
+          mkdir C:\temp\publish
+          mkdir C:\temp\out
 
       - name: Run appcast-generator container
         run: |
