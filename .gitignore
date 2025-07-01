@@ -2,3 +2,4 @@
 bin/
 obj/
 Finance_Manager_WPF_Front/appsettings.json
+Finance_Manager_WPF_Front/.env

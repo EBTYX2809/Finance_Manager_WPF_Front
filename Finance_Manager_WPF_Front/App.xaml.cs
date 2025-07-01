@@ -69,7 +69,8 @@ namespace Finance_Manager_WPF_Front
             // Config
             Config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                //.AddJsonFile("appsettings.json")
                 .Build();
 
             // Helpers

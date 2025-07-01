@@ -25,5 +25,6 @@ jobs:
             -v /home/plotnoplodviktor/finman_wpf/updates:/out \
             -v /home/plotnoplodviktor/finman_wpf/updates/keys:/keys \
             -v /home/plotnoplodviktor/finman_wpf/updates/publish:/app/publish \
+            --env-file /home/plotnoplodviktor/enviroment_files/finman_wpf_enviroment/.env \
             -e APP_VERSION=${{ env.APP_VERSION }} \
             appcast-generator
