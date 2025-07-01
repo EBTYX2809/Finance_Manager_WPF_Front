@@ -27,7 +27,7 @@ jobs:
       - name: Download env and keys artifact
         uses: actions/download-artifact@v4
         with:
-          name: env-keys
+          name: env-and-keys
           path: C:\temp\env-keys
 
       - name: Get version from tag
