@@ -77,3 +77,6 @@ jobs:
         with:
           name: publish-folder
           path: /home/plotnoplodviktor/finman_wpf/updates/publish
+
+      - name: Cleanup temp folder
+        run: rm -rf /tmp/env-keys
