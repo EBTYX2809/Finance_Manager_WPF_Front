@@ -9,13 +9,17 @@ jobs:
   prepare-files:
     runs-on: [self-hosted, updater]
     steps:
+      - name: Copy .env and keys to temp dir
+        run: |
+          mkdir -p /tmp/env-keys
+          cp /home/plotnoplodviktor/enviroment_files/finman_wpf_enviroment/.env /tmp/env-keys/env
+          cp -r /home/plotnoplodviktor/finman_wpf/updates/keys /tmp/env-keys/keys
+
       - name: Upload .env and keys as artifact
         uses: actions/upload-artifact@v4
         with:
           name: env-and-keys
-          path: |
-            /home/plotnoplodviktor/enviroment_files/finman_wpf_enviroment/.env
-            /home/plotnoplodviktor/finman_wpf/updates/keys/
+          path: /tmp/env-keys
 
   build-windows:
     needs: prepare-files
@@ -39,11 +43,10 @@ jobs:
       - name: Run appcast-generator container
         run: |
           docker run --rm `
-            -v C:\temp\env-keys\.env:C:\app\.env `
             -v C:\temp\env-keys\keys:C:\keys `
             -v C:\temp\publish:C:\app\publish `
             -v C:\temp\out:C:\out `
-            --env-file C:\temp\env-keys\.env `
+            --env-file C:\temp\env-keys\env `
             -e APP_VERSION=${{ env.APP_VERSION }} `
             appcast-generator-win
 
