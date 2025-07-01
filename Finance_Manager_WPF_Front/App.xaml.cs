@@ -2,6 +2,7 @@
 using Finance_Manager_WPF_Front.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using System.Windows;
 using System.IO;
 using Finance_Manager_WPF_Front.BackendApi;
