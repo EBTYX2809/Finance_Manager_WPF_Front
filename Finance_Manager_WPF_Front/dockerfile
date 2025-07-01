@@ -7,12 +7,13 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . .
-RUN dotnet publish --self-contained true `
+RUN dotnet publish Finance_Manager_WPF_Front.csproj `
+    --self-contained true `
     --runtime win-x64 `
     --configuration Release `
     --output /publish `
     /p:PublishSingleFile=true `
-    /p:PublishTrimmed=true
+    /p:PublishTrimmed=false
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
