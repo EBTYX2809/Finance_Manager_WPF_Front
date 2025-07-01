@@ -1,4 +1,4 @@
-name: Build appcast update files
+name: Build and generate exe and appcast
 
 on:
   push:
@@ -6,25 +6,71 @@ on:
       - "v*"
 
 jobs:
-  generate-appcast:
+  prepare-files:
     runs-on: [self-hosted, updater]
+    steps:
+      - name: Upload .env and keys as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-and-keys
+          path: |
+            /home/plotnoplodviktor/enviroment_files/finman_wpf_enviroment/.env
+            /home/plotnoplodviktor/finman_wpf/updates/keys/
 
+  build-windows:
+    needs: prepare-files
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Download env and keys artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: env-keys
+          path: C:\temp\env-keys
+
       - name: Get version from tag
         run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
 
-      - name: Build appcast-generator Docker image
-        run: docker build -t appcast-generator ./Finance_Manager_WPF_Front
+      - name: Build Docker image
+        run: docker build -t appcast-generator-win ./Finance_Manager_WPF_Front
 
-      - name: Run appcast-generator
+      - name: Run appcast-generator container
         run: |
-          docker run --rm \
-            -v /home/plotnoplodviktor/finman_wpf/updates:/out \
-            -v /home/plotnoplodviktor/finman_wpf/updates/keys:/keys \
-            -v /home/plotnoplodviktor/finman_wpf/updates/publish:/app/publish \
-            --env-file /home/plotnoplodviktor/enviroment_files/finman_wpf_enviroment/.env \
-            -e APP_VERSION=${{ env.APP_VERSION }} \
-            appcast-generator
+          docker run --rm `
+            -v C:\temp\env-keys\.env:C:\app\.env `
+            -v C:\temp\env-keys\keys:C:\keys `
+            -v C:\temp\publish:C:\app\publish `
+            -v C:\temp\out:C:\out `
+            --env-file C:\app\.env `
+            -e APP_VERSION=${{ env.APP_VERSION }} `
+            appcast-generator-win
+
+      - name: Upload out folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: out-folder
+          path: C:\temp\out
+
+      - name: Upload publish folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: publish-folder
+          path: C:\temp\publish
+
+  save-artifacts-on-server:
+    needs: build-windows
+    runs-on: [self-hosted, updater]
+    steps:
+      - name: Download out
+        uses: actions/download-artifact@v3
+        with:
+          name: out-folder
+          path: /home/plotnoplodviktor/finman_wpf/updates/out
+
+      - name: Download publish
+        uses: actions/download-artifact@v3
+        with:
+          name: publish-folder
+          path: /home/plotnoplodviktor/finman_wpf/updates/publish

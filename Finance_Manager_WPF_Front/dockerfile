@@ -1,43 +1,38 @@
-# 1. Build app
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# escape=`
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
 WORKDIR /app
 
 COPY *.csproj ./
 RUN dotnet restore
 
 COPY . .
-RUN dotnet publish --self-contained true \
-    --runtime win-x64 \
-    --configuration Release \
-    --output /publish \
-    /p:PublishSingleFile=true \
+RUN dotnet publish --self-contained true `
+    --runtime win-x64 `
+    --configuration Release `
+    --output /publish `
+    /p:PublishSingleFile=true `
     /p:PublishTrimmed=true
 
-# 2. Generation appcast
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS generate
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
 
 COPY --from=build /publish /app/publish
 
-# Setup generator
 RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
-ENV PATH="$PATH:/root/.dotnet/tools"
+ENV PATH="$PATH:C:/Users/ContainerAdministrator/.dotnet/tools"
 
-# Add volumes
-VOLUME ["/out", "/keys", "/publish"]
+VOLUME ["C:/out", "C:/keys", "C:/publish"]
 
-# Create enviroment type for version
 ENV APP_VERSION=0.0.0
 
-ENTRYPOINT ["bash", "-c", "\    
-    netsparkle-generate-appcast \
-    --appcast-output-directory /out \
-    --binaries /app/publish \
-    --ext exe \
-    --os windows-x64 \
-    --product-name FinanceManagerWPF \
-    --file-version $APP_VERSION \
-    --key-path /keys \
-    --human-readable true \
-    --output-file-name appcast \
-    "]
+ENTRYPOINT powershell -Command "netsparkle-generate-appcast `
+    --appcast-output-directory C:/out `
+    --binaries C:/app/publish `
+    --ext exe `
+    --os windows-x64 `
+    --product-name FinanceManagerWPF `
+    --file-version $env:APP_VERSION `
+    --key-path C:/keys `
+    --human-readable true `
+    --output-file-name appcast"
