@@ -18,9 +18,9 @@ RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --output /publish `
     /p:PublishSingleFile=true `
     /p:PublishTrimmed=false `
-    /p:Version=$env:APP_VERSION `
-    /p:FileVersion=$env:APP_VERSION `
-    /p:AssemblyVersion=$env:APP_VERSION
+    /p:Version=APP_VERSION `
+    /p:FileVersion=APP_VERSION `
+    /p:AssemblyVersion=APP_VERSION
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
