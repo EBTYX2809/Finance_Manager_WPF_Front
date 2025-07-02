@@ -39,6 +39,10 @@ jobs:
       - name: Get version from tag
         run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $env:GITHUB_ENV #$GITHUB_ENV
 
+      - name: Debug check APP_VERSION
+        run: echo "Version is $env:APP_VERSION"
+        shell: pwsh
+
       - name: Build Docker image
         run: docker build -t appcast-generator-win ./Finance_Manager_WPF_Front
 

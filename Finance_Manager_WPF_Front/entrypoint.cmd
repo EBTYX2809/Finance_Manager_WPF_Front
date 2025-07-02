@@ -6,6 +6,5 @@ netsparkle-generate-appcast ^
   --os windows-x64 ^
   --product-name FinanceManagerWPF ^
   --file-version %APP_VERSION% ^
-  --key-path C:/keys ^
   --human-readable true ^
   --output-file-name appcast
