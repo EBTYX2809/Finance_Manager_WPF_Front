@@ -37,7 +37,11 @@ jobs:
           path: C:\temp\env-keys
 
       - name: Get version from tag
-        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $env:GITHUB_ENV #$GITHUB_ENV
+        shell: pwsh
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          $ver = $tag -replace '^v', ''
+          "APP_VERSION=$ver" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
       - name: Debug check APP_VERSION
         run: echo "Version is $env:APP_VERSION"
