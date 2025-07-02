@@ -27,7 +27,8 @@ VOLUME ["C:/out", "C:/keys", "C:/publish"]
 
 ENV APP_VERSION=0.0.0
 
-ENTRYPOINT powershell -Command "netsparkle-generate-appcast `
+# powershell 
+ENTRYPOINT -Command "netsparkle-generate-appcast `
     --appcast-output-directory C:/out `
     --binaries C:/app/publish `
     --ext exe `
