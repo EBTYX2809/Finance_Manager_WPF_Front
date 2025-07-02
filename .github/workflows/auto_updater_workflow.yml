@@ -37,7 +37,7 @@ jobs:
           path: C:\temp\env-keys
 
       - name: Get version from tag
-        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> $env:GITHUB_ENV #$GITHUB_ENV
 
       - name: Build Docker image
         run: docker build -t appcast-generator-win ./Finance_Manager_WPF_Front
@@ -52,7 +52,7 @@ jobs:
         shell: pwsh
         run: |
           docker run --rm `
-            -v C:\temp\env-keys\keys:C:\keys `
+            -v C:\temp\env-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
             -v C:\temp\out:C:\out `
             --env-file C:\temp\env-keys\env `
             -e APP_VERSION=${{ env.APP_VERSION }} `
