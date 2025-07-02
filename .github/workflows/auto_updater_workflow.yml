@@ -56,6 +56,7 @@ jobs:
           mkdir C:\temp\out
 
       # -v C:\temp\publish:C:\app\publish `
+      #{{ $env.APP_VERSION }}
       - name: Run appcast-generator container
         shell: pwsh
         run: |
@@ -63,7 +64,7 @@ jobs:
             -v C:\temp\env-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
             -v C:\temp\out:C:\out `
             --env-file C:\temp\env-keys\env `
-            -e APP_VERSION=$env:APP_VERSION ` #{{ $env.APP_VERSION }}
+            -e APP_VERSION=$env:APP_VERSION `
             appcast-generator-win
 
       - name: Upload out folder
