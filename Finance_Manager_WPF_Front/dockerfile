@@ -7,13 +7,17 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . .
+ARG APP_VERSION=0.0.0
 RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --self-contained true `
     --runtime win-x64 `
     --configuration Release `
     --output /publish `
     /p:PublishSingleFile=true `
-    /p:PublishTrimmed=false
+    /p:PublishTrimmed=false `
+    /p:Version=${APP_VERSION} `
+    /p:FileVersion=${APP_VERSION} `
+    /p:AssemblyVersion=${APP_VERSION}
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
@@ -27,8 +31,6 @@ RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
 ENV PATH="C:\\Users\\ContainerAdministrator\\.dotnet\\tools;${PATH}"
 
 VOLUME ["C:/out", "C:/keys", "C:/publish"]
-
-ENV APP_VERSION=0.0.0
 
 CMD ["cmd.exe", "/c", "C:\\app\\entrypoint.cmd"]
 

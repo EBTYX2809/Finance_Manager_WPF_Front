@@ -48,7 +48,10 @@ jobs:
         shell: pwsh
 
       - name: Build Docker image
-        run: docker build -t appcast-generator-win ./Finance_Manager_WPF_Front
+        run: |
+          docker build `
+          --build-arg APP_VERSION=$env:APP_VERSION `
+          -t appcast-generator-win ./Finance_Manager_WPF_Front
 
       - name: Create publish and out folders
         run: |
@@ -64,7 +67,6 @@ jobs:
             -v C:\temp\env-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
             -v C:\temp\out:C:\out `
             --env-file C:\temp\env-keys\env `
-            -e APP_VERSION=$env:APP_VERSION `
             appcast-generator-win
 
       - name: Upload out folder
