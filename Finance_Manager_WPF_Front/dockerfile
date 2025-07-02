@@ -9,7 +9,9 @@ RUN dotnet restore
 COPY . .
 
 ARG APP_VERSION=0.0.0
-ENV APP_VERSION=%APP_VERSION%
+# ENV APP_VERSION=%APP_VERSION%
+
+#RUN $env:APP_VERSION = APP_VERSION
 
 RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --self-contained true `
@@ -18,9 +20,9 @@ RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --output /publish `
     /p:PublishSingleFile=true `
     /p:PublishTrimmed=false `
-    /p:Version=APP_VERSION `
-    /p:FileVersion=APP_VERSION `
-    /p:AssemblyVersion=APP_VERSION
+    /p:Version=%APP_VERSION% `
+    /p:FileVersion=%APP_VERSION% `
+    /p:AssemblyVersion=%APP_VERSION%
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
