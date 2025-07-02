@@ -58,13 +58,12 @@ jobs:
           mkdir C:\temp\publish
           mkdir C:\temp\out
 
-      # -v C:\temp\publish:C:\app\publish `
-      #{{ $env.APP_VERSION }}
       - name: Run appcast-generator container
         shell: pwsh
         run: |
           docker run --rm `
             -v C:\temp\env-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
+            -v C:\temp\publish:C:\app\publish `
             -v C:\temp\out:C:\out `
             --env-file C:\temp\env-keys\env `
             appcast-generator-win
@@ -75,11 +74,11 @@ jobs:
           name: out-folder
           path: C:\temp\out
 
-      #- name: Upload publish folder
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: publish-folder
-      #    path: C:\temp\publish
+      - name: Upload publish folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-folder
+          path: C:\temp\publish
 
   save-artifacts-on-server:
     needs: build-windows
@@ -91,11 +90,11 @@ jobs:
           name: out-folder
           path: /home/plotnoplodviktor/finman_wpf/updates/out
 
-      #- name: Download publish
-      #  uses: actions/download-artifact@v4
-      #  with:
-      #    name: publish-folder
-      #    path: /home/plotnoplodviktor/finman_wpf/updates/publish
+      - name: Download publish
+        uses: actions/download-artifact@v4
+        with:
+          name: publish-folder
+          path: /home/plotnoplodviktor/finman_wpf/updates/publish
 
       - name: Cleanup temp folder
         run: rm -rf /tmp/env-keys

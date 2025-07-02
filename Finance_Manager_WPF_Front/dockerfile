@@ -9,9 +9,6 @@ RUN dotnet restore
 COPY . .
 
 ARG APP_VERSION=0.0.0
-# ENV APP_VERSION=%APP_VERSION%
-
-#RUN $env:APP_VERSION = APP_VERSION
 
 RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --self-contained true `
@@ -28,25 +25,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
 
 COPY --from=build /publish /app/publish
-# command for etrypoint
 COPY entrypoint.cmd /app/
 
 RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
-# ENV PATH="$PATH:C:/Users/ContainerAdministrator/.dotnet/tools"
 ENV PATH="C:\\Users\\ContainerAdministrator\\.dotnet\\tools;${PATH}"
 
-VOLUME ["C:/out", "C:/keys", "C:/publish"]
+VOLUME ["C:/out", "C:/keys", "C:/app/publish"]
 
 CMD ["cmd.exe", "/c", "C:\\app\\entrypoint.cmd"]
-
-# powershell -Command 
-# ENTRYPOINT "netsparkle-generate-appcast `
-#    --appcast-output-directory C:/out `
-#    --binaries C:/app/publish `
-#    --ext exe `
-#    --os windows-x64 `
-#    --product-name FinanceManagerWPF `
-#    --file-version $env:APP_VERSION `
-#    --key-path C:/keys `
-#    --human-readable true `
-#    --output-file-name appcast"
