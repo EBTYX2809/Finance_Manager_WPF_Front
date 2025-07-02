@@ -27,7 +27,7 @@ WORKDIR /app
 COPY --from=build /publish /app/publish
 COPY entrypoint.cmd /app/
 
-RUN dir /app/publish
+RUN cmd /c dir C:\app\publish
 
 RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
 ENV PATH="C:\\Users\\ContainerAdministrator\\.dotnet\\tools;${PATH}"
