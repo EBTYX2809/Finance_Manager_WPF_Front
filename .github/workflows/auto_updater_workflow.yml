@@ -57,7 +57,7 @@ jobs:
       - name: Export publish folder from image
         run: |
           docker create --name export-container appcast-generator-win
-          docker cp export-container:C:\app\publish C:\temp\publish
+          docker cp export-container:C:\app\publish\. C:\temp\publish
           docker rm export-container
 
       - name: Run appcast-generator container
