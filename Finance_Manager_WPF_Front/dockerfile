@@ -32,6 +32,6 @@ RUN cmd /c dir C:\app\publish
 RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
 ENV PATH="C:\\Users\\ContainerAdministrator\\.dotnet\\tools;${PATH}"
 
-VOLUME ["C:/out", "C:/keys", "C:/app/publish"]
+VOLUME ["C:/out", "C:/keys"]
 
 CMD ["cmd.exe", "/c", "C:\\app\\entrypoint.cmd"]

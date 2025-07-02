@@ -43,10 +43,6 @@ jobs:
           $ver = $tag -replace '^v', ''
           "APP_VERSION=$ver" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
-      - name: Debug check APP_VERSION
-        run: echo "Version is $env:APP_VERSION"
-        shell: pwsh
-
       - name: Build Docker image
         run: |
           docker build `
@@ -58,12 +54,17 @@ jobs:
           mkdir C:\temp\publish
           mkdir C:\temp\out
 
+      - name: Export publish folder from image
+        run: |
+          docker create --name export-container appcast-generator-win
+          docker cp export-container:C:\app\publish C:\temp\publish
+          docker rm export-container
+
       - name: Run appcast-generator container
         shell: pwsh
         run: |
           docker run --rm `
             -v C:\temp\env-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
-            -v C:\temp\publish:C:\app\publish `
             -v C:\temp\out:C:\out `
             --env-file C:\temp\env-keys\env `
             appcast-generator-win
