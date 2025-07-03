@@ -3,7 +3,7 @@ netsparkle-generate-appcast ^
   --appcast-output-directory C:/out ^
   --binaries C:/app/publish ^
   --single-file C:/app/FinanceManagerWPF.zip ^
-  --ext zip ^
+  --ext exe ^
   --os windows-x64 ^
   --base-url %APP_BASE_URL% ^
   --product-name FinanceManagerWPF ^
