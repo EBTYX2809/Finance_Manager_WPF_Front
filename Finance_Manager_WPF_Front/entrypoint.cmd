@@ -1,7 +1,7 @@
 @echo off
 netsparkle-generate-appcast ^
   --appcast-output-directory C:/out ^
-  --binaries C:/app ^
+  --binaries C:/app/publish ^
   --single-file C:/app/FinanceManagerWPF.zip ^
   --ext zip ^
   --os windows-x64 ^
