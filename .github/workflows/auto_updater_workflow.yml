@@ -21,7 +21,7 @@ jobs:
           name: env-and-keys
           path: /tmp/env-keys
 
-  build-windows:
+  build-binary-and-appcast:
     needs: prepare-files
     runs-on: windows-latest
     steps:
@@ -82,7 +82,7 @@ jobs:
           path: C:\temp\publish
 
   save-artifacts-on-server:
-    needs: build-windows
+    needs: build-binary-and-appcast
     runs-on: [self-hosted, updater]
     steps:
       - name: Download out

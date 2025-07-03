@@ -21,7 +21,7 @@ RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     /p:FileVersion=%APP_VERSION% `
     /p:AssemblyVersion=%APP_VERSION%
 
-RUN powershell -Command "Compress-Archive -Path C:\app\publish\* -DestinationPath C:\app\FinanceManagerWPF.zip"
+RUN powershell -Command "Compress-Archive -Path C:\app\publish -DestinationPath C:\app\FinanceManagerWPF.zip"
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS generate
 WORKDIR /app
