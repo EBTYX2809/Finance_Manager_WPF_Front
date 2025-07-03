@@ -1,10 +1,9 @@
 @echo off
-setlocal
-set ZIP_FILE=FinanceManagerWPF_%APP_VERSION%.zip
 netsparkle-generate-appcast ^
   --appcast-output-directory C:/out ^
-  --single-file C:/app/%ZIP_FILE% ^
+  --single-file C:/app/FinanceManagerWPF.zip ^
   --ext zip ^
+  --file-version %APP_VERSION% ^
   --os windows-x64 ^
   --base-url %APP_BASE_URL% ^
   --product-name FinanceManagerWPF ^

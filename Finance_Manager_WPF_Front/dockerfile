@@ -32,7 +32,7 @@ COPY entrypoint.cmd /app/
 ARG APP_VERSION=0.0.0
 ENV APP_VERSION=${APP_VERSION}
 
-RUN powershell -Command "Compress-Archive -Path C:\app\publish\* -DestinationPath C:\app\FinanceManagerWPF_${env:APP_VERSION}.zip"
+RUN powershell -Command "Compress-Archive -Path C:\app\publish\* -DestinationPath C:\app\FinanceManagerWPF.zip"
 
 RUN dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
 ENV PATH="C:\\Users\\ContainerAdministrator\\.dotnet\\tools;${PATH}"
