@@ -54,10 +54,10 @@ jobs:
           mkdir C:\temp\publish
           mkdir C:\temp\out
 
-      - name: Export publish folder from image
+      - name: Export app archive from image
         run: |
           docker create --name export-container appcast-generator-win
-          docker cp export-container:C:\app\publish C:\temp\publish
+          docker cp export-container:C:\app\FinanceManagerWPF.zip C:\temp\publish
           docker rm export-container
 
       - name: Run appcast-generator container
@@ -95,7 +95,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: publish-folder
-          path: /home/plotnoplodviktor/finman_wpf/updates
+          path: /home/plotnoplodviktor/finman_wpf/updates/publish
 
       - name: Cleanup temp folder
         run: rm -rf /tmp/env-keys
