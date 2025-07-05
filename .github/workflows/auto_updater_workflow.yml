@@ -13,9 +13,13 @@ jobs:
         run: |
           mkdir -p /tmp/configs-keys/configs
           mkdir -p /tmp/configs-keys/keys
-          cp /home/plotnoplodviktor/configs/finman_wpf_config/appsettings.json /tmp/configs-keys/configs
-          cp /home/plotnoplodviktor/configs/finman_wpf_config/.env /tmp/configs-keys/configs
+          cp -r /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
+
+      - name: Debug configs contents
+        run: |
+          echo "Configs dir contains:"
+          ls -la /tmp/configs-keys/configs
 
       - name: Upload configs and keys as artifact
         uses: actions/upload-artifact@v4
