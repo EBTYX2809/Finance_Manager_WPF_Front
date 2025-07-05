@@ -21,9 +21,7 @@ public partial class FinanceApiClient
     private async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, 
         string url, CancellationToken cancellationToken = default)
     {
-        url = url.TrimStart('/');
-
-        if (url.StartsWith("api/Auth", StringComparison.OrdinalIgnoreCase)) return;
+        if (url.Contains("api/Auth")) return;
 
         var token = await _tokensManager.GetAccessTokenAsync();        
 
@@ -33,9 +31,7 @@ public partial class FinanceApiClient
     private async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, 
         StringBuilder urlBuilder, CancellationToken cancellationToken = default)
     {
-        var url = urlBuilder.ToString().TrimStart('/');
-
-        if (url.StartsWith("api/Auth", StringComparison.OrdinalIgnoreCase)) return;
+        if (urlBuilder.ToString().Contains("api/Auth")) return;
 
         var token = await _tokensManager.GetAccessTokenAsync();
 
@@ -45,7 +41,7 @@ public partial class FinanceApiClient
     private async Task ProcessResponseAsync(HttpClient client, HttpResponseMessage response, CancellationToken cancellationToken)
     {
         if(response.RequestMessage.Method.ToString() != "GET" 
-            && !response.RequestMessage.RequestUri.AbsolutePath.Contains("/api/Auth"))
+            && !response.RequestMessage.RequestUri.AbsolutePath.Contains("api/Auth"))
         {
             await UpdateUserBalanceAfterBackendResponse.Invoke(); // Subscribed in UserService
         }
