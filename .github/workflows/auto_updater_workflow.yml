@@ -13,7 +13,7 @@ jobs:
         run: |
           mkdir -p /tmp/configs-keys/configs
           mkdir -p /tmp/configs-keys/keys
-          cp -r /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
+          cp -r /home/plotnoplodviktor/configs/finman_wpf_config/. /tmp/configs-keys/configs
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
 
       - name: Debug configs contents
