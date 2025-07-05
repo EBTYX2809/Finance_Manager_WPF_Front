@@ -68,11 +68,7 @@ namespace Finance_Manager_WPF_Front
         private void ConfigureServices(IServiceCollection services)
         {
             // Config
-            Config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddEnvironmentVariables()
-                //.AddJsonFile("appsettings.json")
-                .Build();
+            SetConfig();
 
             // Helpers
             services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -112,6 +108,35 @@ namespace Finance_Manager_WPF_Front
             services.AddTransient<MainWindow>();
             services.AddTransient<PrimaryCurrencyPickWindow>();
             services.AddTransient<WindowChanger>();
+        }
+
+        private void SetConfig()
+        {
+            var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+
+            if (env == "Production")
+            {
+                var password = Environment.GetEnvironmentVariable("APPSETTINGS_PASSWORD");
+
+                if (string.IsNullOrWhiteSpace(password))
+                    return;
+
+                using var encryptedStream = File.OpenRead("appsettings.enc");
+                using var decryptedStream = Decryptor.DecryptWithOpenSsl(encryptedStream, password);
+
+                Config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonStream(decryptedStream)
+                    .Build();
+            }
+            else
+            {
+                Config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+            }
+
         }
     }
 }
