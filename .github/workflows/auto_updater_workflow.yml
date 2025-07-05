@@ -11,14 +11,10 @@ jobs:
     steps:
       - name: Copy configs and keys to temp dir
         run: |
-          echo "Creating temp dirs..."
           mkdir -p /tmp/configs-keys/configs
           mkdir -p /tmp/configs-keys/keys
-          echo "Copying configs..."
           cp -r /home/plotnoplodviktor/configs/finman_wpf_config/* /tmp/configs-keys/configs
-          echo "Copying keys..."
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
-          echo "Well Done."
 
       - name: Upload configs and keys as artifact
         uses: actions/upload-artifact@v4
@@ -51,7 +47,7 @@ jobs:
       - name: Encrypt appsettings.json
         run: |
           openssl enc -aes-256-cbc -pbkdf2 `
-            -in C:\temp\configs-keys\appsettings.json `
+            -in C:\temp\configs-keys\configs\appsettings.json `
             -out .\Finance_Manager_WPF_Front\appsettings.enc `
             -pass pass:"${{ secrets.ENCRYPT_APPSETTINGS_PASSWORD }}"
         shell: pwsh
