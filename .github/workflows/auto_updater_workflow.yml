@@ -14,7 +14,7 @@ jobs:
           echo "Creating temp dir..."
           mkdir -p /tmp/configs-keys
           echo "Copying configs..."
-          cp -r /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
+          cp -r /home/plotnoplodviktor/configs/finman_wpf_config/* /tmp/configs-keys/configs
           echo "Copying keys..."
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys /tmp/configs-keys/keys
           echo "Done."
@@ -51,7 +51,7 @@ jobs:
         run: |
           openssl enc -aes-256-cbc -pbkdf2 `
             -in C:\temp\configs-keys\appsettings.json `
-            -out .\Finance_Manager_WPF_Front\appsettings.enc`
+            -out .\Finance_Manager_WPF_Front\appsettings.enc `
             -pass pass:"${{ secrets.ENCRYPT_APPSETTINGS_PASSWORD }}"
         shell: pwsh
 
