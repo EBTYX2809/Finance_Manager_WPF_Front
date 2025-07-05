@@ -13,7 +13,7 @@ jobs:
         run: |
           mkdir -p /tmp/configs-keys/configs
           mkdir -p /tmp/configs-keys/keys
-          cp -r /home/plotnoplodviktor/configs/finman_wpf_config/* /tmp/configs-keys/configs
+          cp -r /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
 
       - name: Upload configs and keys as artifact
@@ -76,7 +76,7 @@ jobs:
           docker run --rm `
             -v C:\temp\configs-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
             -v C:\temp\out:C:\out `
-            --env-file C:\temp\configs-keys\configs `
+            --env-file C:\temp\configs-keys\configs\.env `
             appcast-generator-win
 
       - name: Upload out folder
