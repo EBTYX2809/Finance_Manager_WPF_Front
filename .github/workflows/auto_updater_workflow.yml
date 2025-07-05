@@ -12,7 +12,7 @@ jobs:
       - name: Copy configs and keys to temp dir
         run: |
           mkdir -p /tmp/configs-keys
-          cp /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
+          cp -r /home/plotnoplodviktor/configs/finman_wpf_config /tmp/configs-keys/configs
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys /tmp/configs-keys/keys
 
       - name: Upload configs and keys as artifact
