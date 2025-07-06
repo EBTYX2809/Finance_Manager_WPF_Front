@@ -13,13 +13,18 @@ jobs:
         run: |
           mkdir -p /tmp/configs-keys/configs
           mkdir -p /tmp/configs-keys/keys
-          cp -r /home/plotnoplodviktor/configs/finman_wpf_config/. /tmp/configs-keys/configs
+          cp /home/plotnoplodviktor/configs/finman_wpf_config/.env /tmp/configs-keys/configs
+          cp /home/plotnoplodviktor/configs/finman_wpf_config/appsettings.json /tmp/configs-keys/configs
           cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
 
-      - name: Debug configs contents
+      - name: Encrypt appsettings.json
         run: |
-          echo "Configs dir contains:"
-          ls -la /tmp/configs-keys/configs
+          openssl enc -aes-256-cbc -pbkdf2 \
+            -in /tmp/configs-keys/configs/appsettings.json \
+            -out /tmp/configs-keys/configs/appsettings.enc \
+            -pass pass:"${{ secrets.ENCRYPT_APPSETTINGS_PASSWORD }}" && \
+          rm /tmp/configs-keys/configs/appsettings.json
+        shell: bash
 
       - name: Upload configs and keys as artifact
         uses: actions/upload-artifact@v4
@@ -49,13 +54,9 @@ jobs:
           $ver = $tag -replace '^v', ''
           "APP_VERSION=$ver" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
-      - name: Encrypt appsettings.json
-        run: |
-          openssl enc -aes-256-cbc -pbkdf2 `
-            -in C:\temp\configs-keys\configs\appsettings.json `
-            -out .\Finance_Manager_WPF_Front\appsettings.enc `
-            -pass pass:"${{ secrets.ENCRYPT_APPSETTINGS_PASSWORD }}"
+      - name: Move appsettings to repo
         shell: pwsh
+        run: Move-Item -Path "C:\temp\configs-keys\configs\appsettings.enc" -Destination ".\Finance_Manager_WPF_Front\" -Force
 
       - name: Build Docker image
         run: |
