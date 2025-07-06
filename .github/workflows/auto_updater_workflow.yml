@@ -82,7 +82,7 @@ jobs:
           docker run --rm `
             -v C:\temp\configs-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
             -v C:\temp\out:C:\out `
-            --env-file C:\temp\configs-keys\configs\.env `
+            --env-file C:\temp\configs-keys\configs\env `
             appcast-generator-win
 
       - name: Upload out folder
