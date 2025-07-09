@@ -47,7 +47,7 @@ jobs:
 
       - name: Move appsettings to repo
         shell: pwsh
-        run: Move-Item -Path "C:\temp\configs-keys\configs\appsettings.enc" -Destination ".\Finance_Manager_WPF_Front" -Force
+        run: Move-Item -Path "C:\temp\configs-keys\configs\appsettings.json" -Destination ".\Finance_Manager_WPF_Front" -Force
 
       - name: Build Docker image
         run: |
