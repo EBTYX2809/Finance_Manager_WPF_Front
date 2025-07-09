@@ -10,11 +10,8 @@ RUN dotnet restore
 COPY . .
 
 ARG APP_VERSION
-ARG APPSETTINGS_PASSWORD
 
 ENV APP_VERSION=${APP_VERSION}
-ENV APPSETTINGS_PASSWORD=${APPSETTINGS_PASSWORD}
-ENV DOTNET_ENVIRONMENT=Production
 
 RUN dotnet publish Finance_Manager_WPF_Front.csproj `
     --self-contained true `
