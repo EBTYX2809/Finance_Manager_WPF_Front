@@ -48,7 +48,7 @@ namespace Finance_Manager_WPF_Front
 
             // NetSparkle auto updater
             _updater = new SparkleUpdater(
-                Config["AppcastUrl"],
+                Config["SparkleAppcastUrl"],
                 new Ed25519Checker(NetSparkleUpdater.Enums.SecurityMode.Strict,
                     publicKey: Config["SparklePublicKey"]))
             {
