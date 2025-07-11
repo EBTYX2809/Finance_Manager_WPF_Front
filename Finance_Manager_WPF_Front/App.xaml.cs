@@ -57,6 +57,8 @@ namespace Finance_Manager_WPF_Front
             };
             _updater.StartLoop(true);
 
+            MessageBox.Show("It's new version");
+
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
