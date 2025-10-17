@@ -9,21 +9,18 @@ jobs:
   prepare-files:
     runs-on: [self-hosted, updater]
     steps:
-      - name: Copy configs and keys to temp dir
+      - name: Copy config to temp dir
         run: |
-          mkdir -p /tmp/configs-keys/configs
-          mkdir -p /tmp/configs-keys/keys
-          cp /home/plotnoplodviktor/configs/finman_wpf_config/.env /tmp/configs-keys/configs/env
-          cp /home/plotnoplodviktor/configs/finman_wpf_config/appsettings.json /tmp/configs-keys/configs
-          cp -r /home/plotnoplodviktor/finman_wpf/updates/keys/* /tmp/configs-keys/keys
+          mkdir -p /tmp/config
+          cp /home/ubuntu/configs/finman_wpf_config/appsettings.json /tmp/config
 
-      - name: Upload configs and keys as artifact
+      - name: Upload config as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: configs-and-keys
-          path: /tmp/configs-keys
+          name: config
+          path: /tmp/config
 
-  build-binary-and-appcast:
+  build-binary:
     needs: prepare-files
     runs-on: windows-latest
     steps:
@@ -32,11 +29,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Download configs and keys artifact
+      - name: Download config artifact
         uses: actions/download-artifact@v4
         with:
-          name: configs-and-keys
-          path: C:\temp\configs-keys
+          name: config
+          path: C:\temp\config
 
       - name: Get version from tag
         shell: pwsh
@@ -47,39 +44,24 @@ jobs:
 
       - name: Move appsettings to repo
         shell: pwsh
-        run: Move-Item -Path "C:\temp\configs-keys\configs\appsettings.json" -Destination ".\Finance_Manager_WPF_Front" -Force
+        run: Move-Item -Path "C:\temp\config\appsettings.json" -Destination ".\Finance_Manager_WPF_Front" -Force
 
       - name: Build Docker image
         run: |
           docker build `
           --build-arg APP_VERSION=$env:APP_VERSION `
-          -t appcast-generator-win ./Finance_Manager_WPF_Front
+            -t finman-wpf:latest `
+            ./Finance_Manager_WPF_Front
 
       - name: Create publish and out folders
         run: |
           mkdir C:\temp\publish
-          mkdir C:\temp\out
 
       - name: Export app archive from image
         run: |
-          docker create --name export-container appcast-generator-win
+          docker create --name export-container finman-wpf:latest
           docker cp export-container:C:\app\FinanceManagerWPF.zip C:\temp\publish
           docker rm export-container
-
-      - name: Run appcast-generator container
-        shell: pwsh
-        run: |
-          docker run --rm `
-            -v C:\temp\configs-keys\keys:C:\Users\ContainerAdministrator\AppData\Local\netsparkle `
-            -v C:\temp\out:C:\out `
-            --env-file C:\temp\configs-keys\configs\env `
-            appcast-generator-win
-
-      - name: Upload out folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: out-folder
-          path: C:\temp\out
 
       - name: Upload publish folder
         uses: actions/upload-artifact@v4
@@ -88,20 +70,14 @@ jobs:
           path: C:\temp\publish
 
   save-artifacts-on-server:
-    needs: build-binary-and-appcast
+    needs: build-binary
     runs-on: [self-hosted, updater]
     steps:
-      - name: Download out
-        uses: actions/download-artifact@v4
-        with:
-          name: out-folder
-          path: /home/plotnoplodviktor/finman_wpf/updates/out
-
       - name: Download publish
         uses: actions/download-artifact@v4
         with:
           name: publish-folder
-          path: /home/plotnoplodviktor/finman_wpf/updates/publish
+          path: /home/ubuntu/projects/finman_wpf/updates/publish
 
       - name: Cleanup temp folder
-        run: rm -rf /tmp/configs-keys
+        run: rm -rf /tmp/config

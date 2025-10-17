@@ -11,9 +11,6 @@ using Finance_Manager_WPF_Front.Models;
 using Finance_Manager_WPF_Front.Services.AuthServices;
 using Serilog;
 using Microsoft.Extensions.Logging;
-using NetSparkleUpdater;
-using NetSparkleUpdater.UI.WPF;
-using NetSparkleUpdater.SignatureVerifiers;
 
 namespace Finance_Manager_WPF_Front
 {
@@ -44,20 +41,7 @@ namespace Finance_Manager_WPF_Front
                 loggingBuilder.AddSerilog();
             });
 
-            CurrencyCultureProvider.Initialize(ServiceProvider.GetRequiredService<UserSession>());
-
-            // NetSparkle auto updater
-            _updater = new SparkleUpdater(
-                Config["SparkleAppcastUrl"],
-                new Ed25519Checker(NetSparkleUpdater.Enums.SecurityMode.Strict,
-                    publicKey: Config["SparklePublicKey"]))
-            {
-                UIFactory = new UIFactory(),
-                RelaunchAfterUpdate = true
-            };
-            _updater.StartLoop(true);
-
-            MessageBox.Show("It's new version");
+            CurrencyCultureProvider.Initialize(ServiceProvider.GetRequiredService<UserSession>());            
 
             // Start from Login Window
             var loginWindow = ServiceProvider.GetRequiredService<LoginWindow>();
