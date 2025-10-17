@@ -1,4 +1,4 @@
-name: Build and generate exe and appcast
+name: Build and generate exe
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   prepare-files:
-    runs-on: [self-hosted, updater]
+    runs-on: [self-hosted, finman_wpf]
     steps:
       - name: Copy config to temp dir
         run: |
@@ -53,7 +53,7 @@ jobs:
             -t finman-wpf:latest `
             ./Finance_Manager_WPF_Front
 
-      - name: Create publish and out folders
+      - name: Create publish folder
         run: |
           mkdir C:\temp\publish
 
@@ -71,7 +71,7 @@ jobs:
 
   save-artifacts-on-server:
     needs: build-binary
-    runs-on: [self-hosted, updater]
+    runs-on: [self-hosted, finman_wpf]
     steps:
       - name: Download publish
         uses: actions/download-artifact@v4
