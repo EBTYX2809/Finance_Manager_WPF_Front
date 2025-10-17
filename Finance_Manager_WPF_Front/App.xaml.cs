@@ -21,7 +21,6 @@ namespace Finance_Manager_WPF_Front
     {
         public static IServiceProvider ServiceProvider { get; private set; }
         public static IConfiguration Config { get; private set; }
-        private SparkleUpdater _updater;
         protected override void OnStartup(StartupEventArgs e)
         {
             // Services
